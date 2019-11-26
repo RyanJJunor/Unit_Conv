@@ -165,4 +165,14 @@
         </TableRow>
     </TableLayout>
 
+    <Button
+        android:id="@+id/buttonClear"
+        android:layout_width="86dp"
+        android:layout_height="44dp"
+        android:ems="10"
+        android:text="clear"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/editTextUnit1"
+        tools:layout_editor_absoluteY="47dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

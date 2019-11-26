@@ -14,6 +14,7 @@ import android.widget.Spinner;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -157,21 +158,38 @@ public class SelectionFragment extends Fragment {
 
         });
 
+        Button buttonAdd = view.findViewById(R.id.buttonAdd);
+
+        buttonAdd.setOnClickListener((v -> onAddConversion()));
+
         populateUnitTypeSpinner(spinnerUnitType);
 
     }
 
     private void onSelect() {
 
-
-        ConversionFragment frag2 = new ConversionFragment();
+        ConversionFragment fragmentConvert = new ConversionFragment();
 
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
 
-        transaction.replace(R.id.frag_frame, frag2);
+        transaction.replace(R.id.frag_frame, fragmentConvert);
         transaction.addToBackStack(null);
 
         transaction.commit();
+
+    }
+
+    private void onAddConversion(){
+
+        NewConversionFragment fragmentAdd = new NewConversionFragment();
+
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+
+        transaction.replace(R.id.frag_frame, fragmentAdd);
+        transaction.addToBackStack(null);
+
+        transaction.commit();
+
 
     }
 

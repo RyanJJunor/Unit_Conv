@@ -13,83 +13,82 @@ public class ConversionDbHelper extends SQLiteOpenHelper {
 
     private static final String SQL_CREATE_ENTRIES =
             "CREATE TABLE IF NOT EXISTS " + Conversions.TABLE_NAME + " (" +
-                    Conversions.COLUMN_NAME_NAME + " TEXT PRIMARY KEY," +
+                    Conversions._ID + " INTEGER PRIMARY KEY," +
                     Conversions.COLUMN_NAME_PRIMARY_UNIT + " TEXT," +
                     Conversions.COLUMN_NAME_SECONDARY_UNIT + " TEXT," +
                     Conversions.COLUMN_NAME_FORMULA + " TEXT," +
                     Conversions.COLUMN_NAME_CATEGORY + " TEXT)";
 
-    private static final String GRAM_TO_KILOGRAM = "('g_kg','Gram', 'Kilogram', '0.001', 'Mass')";
-    private static final String GRAM_TO_POUND = "('g_p','Gram', 'Pound', '0.00220462', 'Mass')";
-    private static final String GRAM_TO_STONE = "('g_st','Gram', 'Stone', '0.000157473', 'Mass')";
+    private static final String GRAM_TO_KILOGRAM = "('Gram', 'Kilogram', '0.001', 'Mass')";
+    private static final String GRAM_TO_POUND = "('Gram', 'Pound', '0.00220462', 'Mass')";
+    private static final String GRAM_TO_STONE = "('Gram', 'Stone', '0.000157473', 'Mass')";
 
-    private static final String KILOGRAM_TO_GRAM = "('kg_g','Kilogram', 'Gram', '1000', 'Mass')";
-    private static final String KILOGRAM_TO_POUND = "('kg_p','Kilogram', 'Pound', '2.20462', 'Mass')";
-    private static final String KILOGRAM_TO_STONE = "('kg_st','Kilogram', 'Stone', '0.157473', 'Mass')";
+    private static final String KILOGRAM_TO_GRAM = "('Kilogram', 'Gram', '1000', 'Mass')";
+    private static final String KILOGRAM_TO_POUND = "('Kilogram', 'Pound', '2.20462', 'Mass')";
+    private static final String KILOGRAM_TO_STONE = "('Kilogram', 'Stone', '0.157473', 'Mass')";
 
-    private static final String POUND_TO_GRAM = "('p_g','Pound', 'Gram', '453.592', 'Mass')";
-    private static final String POUND_TO_KILOGRAM = "('p_kg','Pound', 'Kilogram', '0.453592', 'Mass')";
-    private static final String POUND_TO_STONE = "('p_st','Pound', 'Stone', '0.0714286', 'Mass')";
+    private static final String POUND_TO_GRAM = "('Pound', 'Gram', '453.592', 'Mass')";
+    private static final String POUND_TO_KILOGRAM = "('Pound', 'Kilogram', '0.453592', 'Mass')";
+    private static final String POUND_TO_STONE = "('Pound', 'Stone', '0.0714286', 'Mass')";
 
-    private static final String STONE_TO_GRAM = "('st_g','Stone', 'Gram', '6350.293', 'Mass')";
-    private static final String STONE_TO_KILOGRAM = "('st_kg','Stone', 'Kilogram', '6.35029', 'Mass')";
-    private static final String STONE_TO_POUND = "('st_p','Stone', 'Pound', '14', 'Mass')";
-
-
-    private static final String METRE_TO_KILOMETRE = "('m_km','Metre', 'Kilometre', '0.001', 'Distance')";
-    private static final String METRE_TO_FOOT = "('m_ft','Metre', 'Foot', '3.28084', 'Distance')";
-    private static final String METRE_TO_MILE = "('m_mi','Metre', 'Mile', '0.000621371', 'Distance')";
-
-    private static final String KILOMETRE_TO_METRE = "('km_m','Kilometre', 'Metre', '1000', 'Distance')";
-    private static final String KILOMETRE_TO_FOOT = "('km_ft','Kilometre', 'Foot', '3280.84', 'Distance')";
-    private static final String KILOMETRE_TO_MILE = "('km_mi','Kilometre', 'Mile', '0.621371', 'Distance')";
-
-    private static final String FOOT_TO_METRE = "('ft_m','Foot', 'Metre', '0.3048', 'Distance')";
-    private static final String FOOT_TO_KILOMETRE = "('ft_km','Foot', 'Kilometre', '0.0003048', 'Distance')";
-    private static final String FOOT_TO_MILE = "('ft_mi','Foot', 'Mile', '0.000189394', 'Distance')";
-
-    private static final String MILE_TO_METRE = "('mi_m','Mile', 'Metre', '1609.34', 'Distance')";
-    private static final String MILE_TO_KILOMETRE = "('mi_km','Mile', 'Kilometre', '1.60934', 'Distance')";
-    private static final String MILE_TO_FOOT = "('mi_ft','Mile', 'Foot', '5280', 'Distance')";
+    private static final String STONE_TO_GRAM = "('Stone', 'Gram', '6350.293', 'Mass')";
+    private static final String STONE_TO_KILOGRAM = "('Stone', 'Kilogram', '6.35029', 'Mass')";
+    private static final String STONE_TO_POUND = "('Stone', 'Pound', '14', 'Mass')";
 
 
-    private static final String MILLILITRE_TO_LITRE = "('ml_l','Milliletre', 'Litre', '0.001', 'Volume')";
-    private static final String MILLILITRE_TO_CUP = "('ml_c','Milliletre', 'Cup', '0.00351951', 'Volume')";
-    private static final String MILLILITRE_TO_PINT = "('ml_pt','Milliletre', 'Pint', '0.00175975', 'Volume')";
+    private static final String METRE_TO_KILOMETRE = "('Metre', 'Kilometre', '0.001', 'Distance')";
+    private static final String METRE_TO_FOOT = "('Metre', 'Foot', '3.28084', 'Distance')";
+    private static final String METRE_TO_MILE = "('Metre', 'Mile', '0.000621371', 'Distance')";
 
-    private static final String LITRE_TO_MILLILITRE = "('l_ml','Litre', 'Millilitre', '1000', 'Volume')";
-    private static final String LITRE_TO_CUP = "('l_c','Litre', 'Cup', '3.51951', 'Volume')";
-    private static final String LITRE_TO_PINT = "('l_pt','Litre', 'Pint', '1.75975', 'Volume')";
+    private static final String KILOMETRE_TO_METRE = "('Kilometre', 'Metre', '1000', 'Distance')";
+    private static final String KILOMETRE_TO_FOOT = "('Kilometre', 'Foot', '3280.84', 'Distance')";
+    private static final String KILOMETRE_TO_MILE = "('Kilometre', 'Mile', '0.621371', 'Distance')";
 
-    private static final String CUP_TO_MILLILITRE = "('c_ml','Cup', 'Millilitre', '284.131', 'Volume')";
-    private static final String CUP_TO_LITRE = "('c_l','Cup', 'Litre', '0.284131', 'Volume')";
-    private static final String CUP_TO_PINT = "('c_pt','Cup', 'Pint', '0.5', 'Volume')";
+    private static final String FOOT_TO_METRE = "('Foot', 'Metre', '0.3048', 'Distance')";
+    private static final String FOOT_TO_KILOMETRE = "('Foot', 'Kilometre', '0.0003048', 'Distance')";
+    private static final String FOOT_TO_MILE = "('Foot', 'Mile', '0.000189394', 'Distance')";
 
-    private static final String PINT_TO_MILLILITRE = "('pt_ml','Pint', 'Millilitre', '568.261', 'Volume')";
-    private static final String PINT_TO_LITRE = "('pt_l','Pint', 'Litre', '0.568261', 'Volume')";
-    private static final String PINT_TO_CUP = "('pt_c','Pint', 'Cup', '2', 'Volume')";
+    private static final String MILE_TO_METRE = "('Mile', 'Metre', '1609.34', 'Distance')";
+    private static final String MILE_TO_KILOMETRE = "('Mile', 'Kilometre', '1.60934', 'Distance')";
+    private static final String MILE_TO_FOOT = "('Mile', 'Foot', '5280', 'Distance')";
 
 
-    private static final String SECOND_TO_MINUTE = "('sec_min','Second', 'Minute', '0.0166667', 'Time')";
-    private static final String SECOND_TO_HOUR = "('sec_hr','Second', 'Hour', '0.000277778', 'Time')";
-    private static final String SECOND_TO_DAY = "('sec_day','Second', 'Day', '0.000011574', 'Time')";
+    private static final String MILLILITRE_TO_LITRE = "('Milliletre', 'Litre', '0.001', 'Volume')";
+    private static final String MILLILITRE_TO_CUP = "('Milliletre', 'Cup', '0.00351951', 'Volume')";
+    private static final String MILLILITRE_TO_PINT = "('Milliletre', 'Pint', '0.00175975', 'Volume')";
 
-    private static final String MINUTE_TO_SECOND = "('min_sec','Minute', 'Second', '60', 'Time')";
-    private static final String MINUTE_TO_HOUR = "('min_hr','Minute', 'Hour', '0.0166667', 'Time')";
-    private static final String MINUTE_TO_DAY = "('min_day','Minute', 'Day', '0.000694444', 'Time')";
+    private static final String LITRE_TO_MILLILITRE = "('Litre', 'Millilitre', '1000', 'Volume')";
+    private static final String LITRE_TO_CUP = "('Litre', 'Cup', '3.51951', 'Volume')";
+    private static final String LITRE_TO_PINT = "('Litre', 'Pint', '1.75975', 'Volume')";
 
-    private static final String HOUR_TO_SECOND = "('hr_sec','Hour', 'Second', '3600', 'Time')";
-    private static final String HOUR_TO_MINUTE = "('hr_min','Hour', 'Minute', '60', 'Time')";
-    private static final String HOUR_TO_DAY = "('hr_day','Hour', 'Day', '0.0416667', 'Time')";
+    private static final String CUP_TO_MILLILITRE = "('Cup', 'Millilitre', '284.131', 'Volume')";
+    private static final String CUP_TO_LITRE = "('Cup', 'Litre', '0.284131', 'Volume')";
+    private static final String CUP_TO_PINT = "('Cup', 'Pint', '0.5', 'Volume')";
 
-    private static final String DAY_TO_SECOND = "('day_sec','Day', 'Second', '86400', 'Time')";
-    private static final String DAY_TO_MINUTE = "('day_min','Day', 'Minute', '1440', 'Time')";
-    private static final String DAY_TO_HOUR = "('day_hr','Day', 'Hour', '24', 'Time')";
+    private static final String PINT_TO_MILLILITRE = "('Pint', 'Millilitre', '568.261', 'Volume')";
+    private static final String PINT_TO_LITRE = "('Pint', 'Litre', '0.568261', 'Volume')";
+    private static final String PINT_TO_CUP = "('Pint', 'Cup', '2', 'Volume')";
+
+
+    private static final String SECOND_TO_MINUTE = "('Second', 'Minute', '0.0166667', 'Time')";
+    private static final String SECOND_TO_HOUR = "('Second', 'Hour', '0.000277778', 'Time')";
+    private static final String SECOND_TO_DAY = "('Second', 'Day', '0.000011574', 'Time')";
+
+    private static final String MINUTE_TO_SECOND = "('Minute', 'Second', '60', 'Time')";
+    private static final String MINUTE_TO_HOUR = "('Minute', 'Hour', '0.0166667', 'Time')";
+    private static final String MINUTE_TO_DAY = "('Minute', 'Day', '0.000694444', 'Time')";
+
+    private static final String HOUR_TO_SECOND = "('Hour', 'Second', '3600', 'Time')";
+    private static final String HOUR_TO_MINUTE = "('Hour', 'Minute', '60', 'Time')";
+    private static final String HOUR_TO_DAY = "('Hour', 'Day', '0.0416667', 'Time')";
+
+    private static final String DAY_TO_SECOND = "('Day', 'Second', '86400', 'Time')";
+    private static final String DAY_TO_MINUTE = "('Day', 'Minute', '1440', 'Time')";
+    private static final String DAY_TO_HOUR = "('Day', 'Hour', '24', 'Time')";
 
 
     private static final String SQL_POPULATE_ENTRIES =
             "INSERT INTO " + Conversions.TABLE_NAME + " (" +
-                    Conversions.COLUMN_NAME_NAME + ", " +
                     Conversions.COLUMN_NAME_PRIMARY_UNIT + "," +
                     Conversions.COLUMN_NAME_SECONDARY_UNIT + "," +
                     Conversions.COLUMN_NAME_FORMULA + ", " +

@@ -9,6 +9,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -44,93 +46,103 @@ public class ConversionFragment extends Fragment {
     }
 
     @Override
-    public void onStart() {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onStart();
 
-        TextView textUnit1 = getView().findViewById(R.id.textView10);
+        TextView textUnit1 = view.findViewById(R.id.textView10);
         textUnit1.setText(units.get(0));
-        editTextUnit1 = getView().findViewById(R.id.editTextUnit1);
+        editTextUnit1 = view.findViewById(R.id.editTextUnit1);
 
 
-        TextView textUnit2 = getView().findViewById(R.id.textView11);
+        TextView textUnit2 = view.findViewById(R.id.textView11);
         textUnit2.setText(units.get(1));
-        editTextUnit2 = getView().findViewById(R.id.editTextUnit2);
+        editTextUnit2 = view.findViewById(R.id.editTextUnit2);
 
-        Button buttonBack = getView().findViewById(R.id.buttonBack);
+        Button buttonBack = view.findViewById(R.id.buttonBack);
         buttonBack.setOnClickListener((View v) -> getFragmentManager().popBackStackImmediate());
 
-        Button buttonNo0 = getView().findViewById(R.id.buttonNo0);
+
+        //todo fix appending?
+        Button buttonNo0 = view.findViewById(R.id.buttonNo0);
         buttonNo0.setOnClickListener((View v) -> {
             editTextUnit1.append("0");
             convert();
         });
 
-        Button buttonNo1 = getView().findViewById(R.id.buttonNo1);
+        Button buttonNo1 = view.findViewById(R.id.buttonNo1);
         buttonNo1.setOnClickListener((View v) -> {
             editTextUnit1.append("1");
             convert();
         });
 
-        Button buttonNo2 = getView().findViewById(R.id.buttonNo2);
+        Button buttonNo2 = view.findViewById(R.id.buttonNo2);
         buttonNo2.setOnClickListener((View v) -> {
             editTextUnit1.append("2");
             convert();
         });
 
-        Button buttonNo3 = getView().findViewById(R.id.buttonNo3);
+        Button buttonNo3 = view.findViewById(R.id.buttonNo3);
         buttonNo3.setOnClickListener((View v) -> {
             editTextUnit1.append("3");
             convert();
         });
 
-        Button buttonNo4 = getView().findViewById(R.id.buttonNo4);
+        Button buttonNo4 = view.findViewById(R.id.buttonNo4);
         buttonNo4.setOnClickListener((View v) -> {
             editTextUnit1.append("4");
             convert();
         });
 
-        Button buttonNo5 = getView().findViewById(R.id.buttonNo5);
+        Button buttonNo5 = view.findViewById(R.id.buttonNo5);
         buttonNo5.setOnClickListener((View v) -> {
             editTextUnit1.append("5");
             convert();
         });
 
-        Button buttonNo6 = getView().findViewById(R.id.buttonNo6);
+        Button buttonNo6 = view.findViewById(R.id.buttonNo6);
         buttonNo6.setOnClickListener((View v) -> {
             editTextUnit1.append("6");
             convert();
         });
 
-        Button buttonNo7 = getView().findViewById(R.id.buttonNo7);
+        Button buttonNo7 = view.findViewById(R.id.buttonNo7);
         buttonNo7.setOnClickListener((View v) -> {
             editTextUnit1.append("7");
             convert();
         });
 
-        Button buttonNo8 = getView().findViewById(R.id.buttonNo8);
+        Button buttonNo8 = view.findViewById(R.id.buttonNo8);
         buttonNo8.setOnClickListener((View v) -> {
             editTextUnit1.append("8");
             convert();
         });
 
-        Button buttonNo9 = getView().findViewById(R.id.buttonNo9);
+        Button buttonNo9 = view.findViewById(R.id.buttonNo9);
         buttonNo9.setOnClickListener((View v) -> {
             editTextUnit1.append("9");
             convert();
         });
 
-        Button buttonDecimal = getView().findViewById(R.id.buttonDecimal);
+        Button buttonDecimal = view.findViewById(R.id.buttonDecimal);
         buttonDecimal.setOnClickListener((View v) -> {
             editTextUnit1.append(".");
             convert();
         });
 
-        Button buttonDel = getView().findViewById(R.id.buttonDel);
+        Button buttonDel = view.findViewById(R.id.buttonDel);
         buttonDel.setOnClickListener((View v) -> {
 
             if (editTextUnit1.length()!= 0)
             editTextUnit1.getText().delete(editTextUnit1.length()-1, editTextUnit1.length());
             convert();
+
+        });
+
+        Button buttonClear = view.findViewById(R.id.buttonClear);
+        buttonClear.setOnClickListener((View v) -> {
+
+            editTextUnit1.setText("");
+            editTextUnit2.setText("");
 
         });
 
