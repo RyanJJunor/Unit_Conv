@@ -19,6 +19,7 @@
         tools:layout_editor_absoluteY="2dp" />
 
     <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout"
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:layout_weight="1">

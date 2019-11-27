@@ -115,7 +115,7 @@ public class SelectionFragment extends Fragment {
                 getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         });
 
-        Button buttonSelect = view.findViewById(R.id.buttonSelect);
+        /*Button buttonSelect = view.findViewById(R.id.buttonSelect);
 
         buttonSelect.setOnClickListener(v -> {
 
@@ -166,11 +166,11 @@ public class SelectionFragment extends Fragment {
 
             onSelect();
 
-        });
+        }); **/
 
-        Button buttonAdd = view.findViewById(R.id.buttonAdd);
+        /*Button buttonAdd = view.findViewById(R.id.buttonAdd);
 
-        buttonAdd.setOnClickListener((v -> onAddConversion()));
+        buttonAdd.setOnClickListener((v -> onAddConversion()));**/
 
         populateUnitTypeSpinner(spinnerUnitType);
 

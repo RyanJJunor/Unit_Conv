@@ -51,16 +51,6 @@
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
-        android:id="@+id/buttonSelect"
-        android:layout_width="260dp"
-        android:layout_height="54dp"
-        android:text="@string/stringButtonSelect"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner3" />
-
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
@@ -89,21 +79,10 @@
         app:layout_constraintStart_toStartOf="@+id/spinner3" />
 
     <Button
-        android:id="@+id/buttonAdd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Add own conversion"
-        app:layout_constraintBottom_toTopOf="@+id/buttonSelect"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner3"
-        app:layout_constraintVertical_bias="0.6" />
-
-    <Button
         android:id="@+id/buttonRotate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button"
+        android:text="Rotate"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

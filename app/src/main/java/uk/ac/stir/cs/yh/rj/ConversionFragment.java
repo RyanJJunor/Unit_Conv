@@ -50,16 +50,13 @@ public class ConversionFragment extends Fragment {
         super.onStart();
 
         TextView textUnit1 = view.findViewById(R.id.textView10);
-        textUnit1.setText(units.get(0));
+        //textUnit1.setText(units.get(0));
         editTextUnit1 = view.findViewById(R.id.editTextUnit1);
 
 
         TextView textUnit2 = view.findViewById(R.id.textView11);
-        textUnit2.setText(units.get(1));
+        //textUnit2.setText(units.get(1));
         editTextUnit2 = view.findViewById(R.id.editTextUnit2);
-
-        Button buttonBack = view.findViewById(R.id.buttonBack);
-        buttonBack.setOnClickListener((View v) -> getFragmentManager().popBackStackImmediate());
 
 
         //todo fix appending?
