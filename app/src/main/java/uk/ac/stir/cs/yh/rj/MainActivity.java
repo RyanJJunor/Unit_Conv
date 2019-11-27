@@ -6,6 +6,9 @@ import uk.ac.stir.cs.yh.rj.db.ConversionDbHelper;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
+
 import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -14,6 +17,9 @@ public class MainActivity extends AppCompatActivity {
 
     ConversionDbHelper dbHelper;
     SQLiteDatabase db;
+
+    PagerAdapter pagerAdapterConversion;
+    ViewPager viewPager;
 
 
     @Override
@@ -24,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         //Checks to ensure the right layout is being used
-        if (findViewById(R.id.frag_frame) != null) {
+        if (findViewById(R.id.pagerAdapterConvert) != null) {
 
 
             // If being restored from a previous state do nothing
@@ -44,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
             selectionFragment.setArguments(getIntent().getExtras());
 
             // Add the fragment to the fragment frame in the main_activity layout
-            getSupportFragmentManager().beginTransaction().add(R.id.frag_frame, selectionFragment).commit();
+            getSupportFragmentManager().beginTransaction().add(R.id.pagerAdapterConvert, selectionFragment).commit();
         }
         //TODO Handle this
         else {
@@ -77,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
-        transaction.replace(R.id.frag_frame, frag2);
+        transaction.replace(R.id.pagerAdapterConvert, frag2);
         transaction.addToBackStack(null);
 
         transaction.commit();

@@ -163,5 +163,6 @@ public class ConversionDbHelper extends SQLiteOpenHelper {
 
     }
 
+    //todo put all statements here? Use Threads
 
 }

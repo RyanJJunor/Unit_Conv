@@ -1,5 +1,6 @@
 package uk.ac.stir.cs.yh.rj;
 
+import android.content.pm.ActivityInfo;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -14,7 +15,6 @@ import android.widget.Spinner;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -105,6 +105,16 @@ public class SelectionFragment extends Fragment {
             }
         });
 
+        Button buttonRotate = view.findViewById(R.id.buttonRotate);
+
+        buttonRotate.setOnClickListener(v -> {
+
+            if (getActivity().getRequestedOrientation() == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT || getActivity().getRequestedOrientation() == ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
+            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+            else
+                getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        });
+
         Button buttonSelect = view.findViewById(R.id.buttonSelect);
 
         buttonSelect.setOnClickListener(v -> {
@@ -172,7 +182,7 @@ public class SelectionFragment extends Fragment {
 
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
 
-        transaction.replace(R.id.frag_frame, fragmentConvert);
+        transaction.replace(R.id.pagerAdapterConvert, fragmentConvert);
         transaction.addToBackStack(null);
 
         transaction.commit();
@@ -185,7 +195,7 @@ public class SelectionFragment extends Fragment {
 
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
 
-        transaction.replace(R.id.frag_frame, fragmentAdd);
+        transaction.replace(R.id.pagerAdapterConvert, fragmentAdd);
         transaction.addToBackStack(null);
 
         transaction.commit();
