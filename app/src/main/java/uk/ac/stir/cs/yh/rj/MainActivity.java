@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         TabLayout tabLayout = findViewById(R.id.tabLayout);
+        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         final ViewPager viewPager = findViewById(R.id.pagerAdapterConvert);
         final ConversionPagerAdapter adapter = new ConversionPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
@@ -45,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
             public void
             onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
+
             }
 
             @Override

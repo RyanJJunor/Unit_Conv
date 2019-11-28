@@ -4,23 +4,54 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import java.util.ArrayList;
-
 public class SharedViewModel extends ViewModel {
-    private ArrayList<String> selectedUnits = new ArrayList<>();
-    private double formula;
+    private MutableLiveData<String> unit1;
+    private MutableLiveData<String> unit2;
+    private MutableLiveData<Double> formula;
 
-    void select(ArrayList<String> selectedUnits, double formula) {
-        //todo this or unique variable names?
-        this.selectedUnits = selectedUnits;
-        this.formula = formula;
+    public LiveData<String> getUnit1() {
+        if (unit1 == null){
+            unit1 = new MutableLiveData<>();
+
+        }
+
+        return unit1;
     }
 
-    ArrayList<String> getSelected() {
-        return selectedUnits;
+    public LiveData<String> getUnit2() {
+        if (unit2 == null){
+            unit2 = new MutableLiveData<>();
+
+        }
+
+        return unit2;
     }
 
-    public double getFormula() {
+    public LiveData<Double> getFormula() {
+        if (formula == null){
+            formula = new MutableLiveData<>();
+
+        }
+
         return formula;
     }
+
+
+    public void loadUnit1(String unit1){
+
+        this.unit1.setValue(unit1);
+
+    }
+    public void loadUnit2(String unit2){
+
+        this.unit2.setValue(unit2);
+
+    }
+
+    public void loadFormula(double formula){
+
+        this.formula.setValue(formula);
+
+    }
+
 }

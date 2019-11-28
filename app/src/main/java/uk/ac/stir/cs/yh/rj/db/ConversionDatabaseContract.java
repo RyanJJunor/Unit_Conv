@@ -2,8 +2,6 @@ package uk.ac.stir.cs.yh.rj.db;
 
 import android.provider.BaseColumns;
 
-import uk.ac.stir.cs.yh.rj.SharedViewModel;
-
 public final class ConversionDatabaseContract {
 
     private ConversionDatabaseContract(){

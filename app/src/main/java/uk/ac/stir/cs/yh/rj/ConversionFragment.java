@@ -18,9 +18,12 @@ import java.util.ArrayList;
 
 public class ConversionFragment extends Fragment {
 
+    SharedViewModel model;
+
     //todo change name
-    private ArrayList<String> units;
-    private double formula;
+
+    double formula;
+
     private EditText editTextUnit1;
     private EditText editTextUnit2;
 
@@ -28,10 +31,6 @@ public class ConversionFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-
-        SharedViewModel model = new ViewModelProvider(this.getActivity(), new ViewModelProvider.NewInstanceFactory()).get(SharedViewModel.class);
-        units = model.getSelected();
-        formula = model.getFormula();
 
     }
 
@@ -49,13 +48,30 @@ public class ConversionFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onStart();
 
-        TextView textUnit1 = view.findViewById(R.id.textView10);
-        //textUnit1.setText(units.get(0));
+        model = new ViewModelProvider(this.getActivity(), new ViewModelProvider.NewInstanceFactory()).get(SharedViewModel.class);
+        model.getUnit1().observe(this, unit1 -> {
+
+            System.out.println("YEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEESSSSSSSSSSSSSSSSSSSSSSSSSSS");
+            TextView textUnit1 = view.findViewById(R.id.textView10);
+            textUnit1.setText(unit1);
+
+        });
+
+        model.getUnit2().observe(this, unit2 -> {
+            TextView textUnit2 = view.findViewById(R.id.textView11);
+            textUnit2.setText(unit2);
+        });
+
+        model.getFormula().observe(this, formula -> {
+            this.formula = formula;
+            convert();
+        });
+
+
         editTextUnit1 = view.findViewById(R.id.editTextUnit1);
 
 
-        TextView textUnit2 = view.findViewById(R.id.textView11);
-        //textUnit2.setText(units.get(1));
+
         editTextUnit2 = view.findViewById(R.id.editTextUnit2);
 
 
@@ -146,9 +162,11 @@ public class ConversionFragment extends Fragment {
 
     }
 
-
     private void convert(){
 
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{" +model.getFormula().getValue());
+        if (editTextUnit1.length() != 0)
         editTextUnit2.setText(String.valueOf(Double.parseDouble(editTextUnit1.getText().toString()) * formula));
+        //todo fix same units conversion, mario... fix switching unit type(Handle no return from formula sql query?)
     }
 }

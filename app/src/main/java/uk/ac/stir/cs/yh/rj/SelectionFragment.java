@@ -64,9 +64,9 @@ public class SelectionFragment extends Fragment {
         spinnerUnit1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-                setUnit1(spinnerUnit1, position);
                 unit1Pos = position;
+                setUnit1(spinnerUnit1, position);
+
 
             }
 
@@ -79,9 +79,9 @@ public class SelectionFragment extends Fragment {
         spinnerUnit2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-                setUnit2(spinnerUnit2, position);
                 unit2Pos = position;
+                setUnit2(spinnerUnit2, position);
+
 
             }
 
@@ -110,7 +110,7 @@ public class SelectionFragment extends Fragment {
         buttonRotate.setOnClickListener(v -> {
 
             if (getActivity().getRequestedOrientation() == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT || getActivity().getRequestedOrientation() == ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
-            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+                getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
             else
                 getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         });
@@ -176,7 +176,7 @@ public class SelectionFragment extends Fragment {
 
     }
 
-    private void onSelect() {
+    /*private void onSelect() {
 
         ConversionFragment fragmentConvert = new ConversionFragment();
 
@@ -201,7 +201,7 @@ public class SelectionFragment extends Fragment {
         transaction.commit();
 
 
-    }
+    }*/
 
 
     //todo tidy up, fix context?
@@ -279,13 +279,65 @@ public class SelectionFragment extends Fragment {
 
     }
 
-    private void setUnit1(Spinner unit1, int pos){
-        selectedUnits.add(0, unit1.getAdapter().getItem(pos).toString());
+    private void setUnit1(Spinner unit1, int pos) {
+        model.loadUnit1(unit1.getAdapter().getItem(pos).toString());
+        if (model.getUnit1() != null || model.getUnit2() != null)
+        setFormula();
     }
 
-    private void setUnit2(Spinner unit2, int pos){
-        selectedUnits.add(1, unit2.getAdapter().getItem(pos).toString());
+    private void setUnit2(Spinner unit2, int pos) {
+        model.loadUnit2(unit2.getAdapter().getItem(pos).toString());
+        if (model.getUnit1() != null || model.getUnit2() != null)
+        setFormula();
     }
 
+    private void setFormula() {
+
+        String[] projection = {
+                Conversions.COLUMN_NAME_FORMULA
+        };
+
+        String selection = Conversions.COLUMN_NAME_PRIMARY_UNIT + " = ? AND " + Conversions.COLUMN_NAME_SECONDARY_UNIT + " = ? ";
+
+
+        String[] selectionArgs = {
+
+                model.getUnit1().getValue(), model.getUnit2().getValue()
+
+        };
+
+        System.out.println("£££££££££££££££"+model.getUnit1().getValue());
+        System.out.println(unit1Pos);
+        System.out.println("$$$$$$$$$$$$$$$"+model.getUnit2().getValue());
+        System.out.println(unit2Pos);
+
+        if (unit1Pos != unit2Pos) {
+            //todo change these?
+            Cursor cursor = db.query(
+                    true,
+                    Conversions.TABLE_NAME,
+                    projection,
+                    selection,
+                    selectionArgs,
+                    null,
+                    null,
+                    null,
+                    null);
+
+            // todo assertion for only one result?
+            ArrayList<String> formula = new ArrayList<>();
+            while (cursor.moveToNext()) {
+                String itemId = cursor.getString(
+                        cursor.getColumnIndexOrThrow(Conversions.COLUMN_NAME_FORMULA));
+                formula.add(itemId);
+            }
+
+            cursor.close();
+
+            model.loadFormula(Double.parseDouble(formula.get(0)));
+        }
+
+
+    }
 
 }
