@@ -14,5 +14,6 @@ public final class ConversionDatabaseContract {
         public static final String COLUMN_NAME_SECONDARY_UNIT = "unit_2";
         public static final String COLUMN_NAME_FORMULA = "formula";
         public static final String COLUMN_NAME_CATEGORY = "category";
+        public static final String COLUMN_NAME_ADDED_CONVERSION_UNIQUE = "added";
     }
 }

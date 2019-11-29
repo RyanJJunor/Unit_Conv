@@ -17,7 +17,8 @@ public class ConversionDbHelper extends SQLiteOpenHelper {
                     Conversions.COLUMN_NAME_PRIMARY_UNIT + " TEXT," +
                     Conversions.COLUMN_NAME_SECONDARY_UNIT + " TEXT," +
                     Conversions.COLUMN_NAME_FORMULA + " TEXT," +
-                    Conversions.COLUMN_NAME_CATEGORY + " TEXT)";
+                    Conversions.COLUMN_NAME_CATEGORY + " TEXT," +
+                    Conversions.COLUMN_NAME_ADDED_CONVERSION_UNIQUE + " TEXT UNIQUE)";
 
     private static final String GRAM_TO_KILOGRAM = "('Gram', 'Kilogram', '0.001', 'Mass')";
     private static final String GRAM_TO_POUND = "('Gram', 'Pound', '0.00220462', 'Mass')";

@@ -51,7 +51,6 @@ public class ConversionFragment extends Fragment {
         model = new ViewModelProvider(this.getActivity(), new ViewModelProvider.NewInstanceFactory()).get(SharedViewModel.class);
         model.getUnit1().observe(this, unit1 -> {
 
-            System.out.println("YEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEESSSSSSSSSSSSSSSSSSSSSSSSSSS");
             TextView textUnit1 = view.findViewById(R.id.textView10);
             textUnit1.setText(unit1);
 
@@ -169,6 +168,6 @@ public class ConversionFragment extends Fragment {
         editTextUnit2.setText(String.valueOf(Double.parseDouble(editTextUnit1.getText().toString()) * formula));
         else
             editTextUnit2.setText("");
-        //todo fix same units conversion, mario... fix switching unit type(Handle no return from formula sql query?)
+
     }
 }

@@ -131,16 +131,6 @@ public class SelectionFragment extends Fragment {
             }
         });
 
-        Button buttonRotate = view.findViewById(R.id.buttonRotate);
-
-        buttonRotate.setOnClickListener(v -> {
-
-            if (getActivity().getRequestedOrientation() == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT || getActivity().getRequestedOrientation() == ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
-                getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-            else
-                getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        });
-
         populateUnitTypeSpinner(spinnerUnitType);
 
     }
