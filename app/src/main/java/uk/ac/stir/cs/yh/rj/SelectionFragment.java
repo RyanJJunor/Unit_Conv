@@ -31,6 +31,9 @@ public class SelectionFragment extends Fragment {
     private ArrayList<String> selectedUnits = new ArrayList<>(2);
     private int unit1Pos;
     private int unit2Pos;
+    private int currentCategory;
+    private int unit1Cat;
+    private int unit2Cat;
 
 
     @Override
@@ -65,8 +68,8 @@ public class SelectionFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 unit1Pos = position;
+                unit1Cat = currentCategory;
                 setUnit1(spinnerUnit1, position);
-
 
             }
 
@@ -80,6 +83,7 @@ public class SelectionFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 unit2Pos = position;
+                unit2Cat = currentCategory;
                 setUnit2(spinnerUnit2, position);
 
 
@@ -95,6 +99,7 @@ public class SelectionFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
+                currentCategory = position;
                 populateUnitSpinner(spinnerUnitType, position, spinnerUnit1, spinnerUnit2);
 
             }
@@ -115,94 +120,9 @@ public class SelectionFragment extends Fragment {
                 getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         });
 
-        /*Button buttonSelect = view.findViewById(R.id.buttonSelect);
-
-        buttonSelect.setOnClickListener(v -> {
-
-            String[] projection = {
-                Conversions.COLUMN_NAME_FORMULA
-            };
-
-            String selection = Conversions.COLUMN_NAME_PRIMARY_UNIT + " = ? AND " + Conversions.COLUMN_NAME_SECONDARY_UNIT + " = ? ";
-
-
-            String[] selectionArgs = {
-
-                    spinnerUnit1.getAdapter().getItem(unit1Pos).toString(), spinnerUnit2.getAdapter().getItem(unit2Pos).toString()
-
-            };
-
-            if (unit1Pos != unit2Pos) {
-                //todo change these?
-                Cursor cursor = db.query(
-                        true,
-                        Conversions.TABLE_NAME,
-                        projection,
-                        selection,
-                        selectionArgs,
-                        null,
-                        null,
-                        null,
-                        null);
-
-                // todo assertion for only one result?
-                ArrayList<String> formula = new ArrayList<>();
-                while (cursor.moveToNext()) {
-                    String itemId = cursor.getString(
-                            cursor.getColumnIndexOrThrow(Conversions.COLUMN_NAME_FORMULA));
-                    formula.add(itemId);
-                }
-
-                cursor.close();
-
-
-
-                //todo change fomula.get(0)??
-                model.select(selectedUnits, Double.parseDouble(formula.get(0)));
-
-            }else
-                model.select(selectedUnits, 1);
-
-
-            onSelect();
-
-        }); **/
-
-        /*Button buttonAdd = view.findViewById(R.id.buttonAdd);
-
-        buttonAdd.setOnClickListener((v -> onAddConversion()));**/
-
         populateUnitTypeSpinner(spinnerUnitType);
 
     }
-
-    /*private void onSelect() {
-
-        ConversionFragment fragmentConvert = new ConversionFragment();
-
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-
-        transaction.replace(R.id.pagerAdapterConvert, fragmentConvert);
-        transaction.addToBackStack(null);
-
-        transaction.commit();
-
-    }
-
-    private void onAddConversion(){
-
-        NewConversionFragment fragmentAdd = new NewConversionFragment();
-
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-
-        transaction.replace(R.id.pagerAdapterConvert, fragmentAdd);
-        transaction.addToBackStack(null);
-
-        transaction.commit();
-
-
-    }*/
-
 
     //todo tidy up, fix context?
     private void populateUnitTypeSpinner(Spinner spinner) {
@@ -281,13 +201,13 @@ public class SelectionFragment extends Fragment {
 
     private void setUnit1(Spinner unit1, int pos) {
         model.loadUnit1(unit1.getAdapter().getItem(pos).toString());
-        if (model.getUnit1() != null || model.getUnit2() != null)
+        if (model.getUnit1() != null && unit1Cat == unit2Cat)
         setFormula();
     }
 
     private void setUnit2(Spinner unit2, int pos) {
         model.loadUnit2(unit2.getAdapter().getItem(pos).toString());
-        if (model.getUnit1() != null || model.getUnit2() != null)
+        if (model.getUnit2() != null && unit1Cat == unit2Cat)
         setFormula();
     }
 
@@ -306,10 +226,12 @@ public class SelectionFragment extends Fragment {
 
         };
 
+        System.out.println(selectionArgs[0]);
+        System.out.println(selectionArgs[1]);
         System.out.println("£££££££££££££££"+model.getUnit1().getValue());
-        System.out.println(unit1Pos);
+        System.out.println(unit1Cat);
         System.out.println("$$$$$$$$$$$$$$$"+model.getUnit2().getValue());
-        System.out.println(unit2Pos);
+        System.out.println(unit2Cat);
 
         if (unit1Pos != unit2Pos) {
             //todo change these?
@@ -324,6 +246,8 @@ public class SelectionFragment extends Fragment {
                     null,
                     null);
 
+            System.out.println("SELECT "+projection[0] + " WHERE " + selection+ " = " + selectionArgs[0] + " " + selectionArgs[1]);
+
             // todo assertion for only one result?
             ArrayList<String> formula = new ArrayList<>();
             while (cursor.moveToNext()) {
@@ -333,6 +257,8 @@ public class SelectionFragment extends Fragment {
             }
 
             cursor.close();
+
+            System.out.println("777777777777777777777777777777777777777777777777777777777777777777777777" + formula.get(0));
 
             model.loadFormula(Double.parseDouble(formula.get(0)));
         }

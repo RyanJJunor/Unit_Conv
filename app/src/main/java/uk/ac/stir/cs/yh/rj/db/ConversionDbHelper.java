@@ -53,9 +53,9 @@ public class ConversionDbHelper extends SQLiteOpenHelper {
     private static final String MILE_TO_FOOT = "('Mile', 'Foot', '5280', 'Distance')";
 
 
-    private static final String MILLILITRE_TO_LITRE = "('Milliletre', 'Litre', '0.001', 'Volume')";
-    private static final String MILLILITRE_TO_CUP = "('Milliletre', 'Cup', '0.00351951', 'Volume')";
-    private static final String MILLILITRE_TO_PINT = "('Milliletre', 'Pint', '0.00175975', 'Volume')";
+    private static final String MILLILITRE_TO_LITRE = "('Millilitre', 'Litre', '0.001', 'Volume')";
+    private static final String MILLILITRE_TO_CUP = "('Millilitre', 'Cup', '0.00351951', 'Volume')";
+    private static final String MILLILITRE_TO_PINT = "('Millilitre', 'Pint', '0.00175975', 'Volume')";
 
     private static final String LITRE_TO_MILLILITRE = "('Litre', 'Millilitre', '1000', 'Volume')";
     private static final String LITRE_TO_CUP = "('Litre', 'Cup', '3.51951', 'Volume')";
