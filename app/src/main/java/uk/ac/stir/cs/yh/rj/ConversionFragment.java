@@ -167,6 +167,8 @@ public class ConversionFragment extends Fragment {
         System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{" +model.getFormula().getValue());
         if (editTextUnit1.length() != 0)
         editTextUnit2.setText(String.valueOf(Double.parseDouble(editTextUnit1.getText().toString()) * formula));
+        else
+            editTextUnit2.setText("");
         //todo fix same units conversion, mario... fix switching unit type(Handle no return from formula sql query?)
     }
 }
