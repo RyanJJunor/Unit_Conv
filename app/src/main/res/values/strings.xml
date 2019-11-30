@@ -3,9 +3,9 @@
     <string name="stringTitle">Unit Converter</string>
     <string name="stringUnits">Units</string>
     <string name="stringButtonSelect">Select</string>
-    <string name="textUnitType">1. Select unit type</string>
-    <string name="textUnit1">2. Select unit 1</string>
-    <string name="textUnit2">3. Select unit 2</string>
+    <string name="textUnitType">1. Select Unit Type:</string>
+    <string name="textUnit1">2. Select Unit to Convert From:</string>
+    <string name="textUnit2">3. Select Unit to Convert to:</string>
     <string name="stringConversionTitle">Conversion TODO</string>
     <string name="backButton">Back</string>
     <string-array name="stringUnitType">

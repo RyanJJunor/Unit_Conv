@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class ConversionFragment extends Fragment {
@@ -23,6 +24,8 @@ public class ConversionFragment extends Fragment {
     //todo change name
 
     double formula;
+
+    DecimalFormat df = new DecimalFormat("###,###.###");
 
     private EditText editTextUnit1;
     private EditText editTextUnit2;
@@ -158,14 +161,16 @@ public class ConversionFragment extends Fragment {
 
         });
 
-
     }
 
     private void convert(){
 
-        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{" +model.getFormula().getValue());
-        if (editTextUnit1.length() != 0)
-        editTextUnit2.setText(String.valueOf(Double.parseDouble(editTextUnit1.getText().toString()) * formula));
+
+        if (editTextUnit1.length() != 0) {
+            editTextUnit2.setText(df.format(Double.parseDouble(editTextUnit1.getText().toString()) * formula));
+            //editTextUnit1.setText(df.format(Double.parseDouble(editTextUnit1.getText().toString())));
+
+        }
         else
             editTextUnit2.setText("");
 
