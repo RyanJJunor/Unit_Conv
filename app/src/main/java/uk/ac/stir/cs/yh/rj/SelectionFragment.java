@@ -21,12 +21,12 @@ import java.util.ArrayList;
 
 import uk.ac.stir.cs.yh.rj.db.ConversionDatabaseContract.Conversions;
 import uk.ac.stir.cs.yh.rj.db.ConversionDbHelper;
+import uk.ac.stir.cs.yh.rj.db.ConversionDbMethods;
 
 public class SelectionFragment extends Fragment {
     //TODO read more about passing information and interfaces
-    private ConversionDbHelper dbHelper;
-    private SQLiteDatabase db;
     private SharedViewModel model;
+    ConversionDbMethods dbMethods;
     private ArrayList<String> selectedUnits = new ArrayList<>(2);
     private int unit1Pos;
     private int unit2Pos;
@@ -38,6 +38,8 @@ public class SelectionFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        dbMethods = new ConversionDbMethods(getContext());
     }
 
     @Override
@@ -66,9 +68,9 @@ public class SelectionFragment extends Fragment {
         spinnerUnit1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                System.out.println("oui");
-                if(unit2Pos == position) {
-                    System.out.println("true");
+
+                if (unit2Pos == position) {
+
                     unit2Pos = unit1Pos;
 
 
@@ -78,7 +80,6 @@ public class SelectionFragment extends Fragment {
                 unit1Cat = currentCategory;
                 unit1Pos = position;
                 setUnit1(spinnerUnit1, position);
-
 
 
             }
@@ -93,9 +94,8 @@ public class SelectionFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                System.out.println("Si");
-                if(unit1Pos == position) {
-                    System.out.println("false");
+                if (unit1Pos == position) {
+
                     unit1Pos = unit2Pos;
 
 
@@ -105,7 +105,6 @@ public class SelectionFragment extends Fragment {
                 unit2Cat = currentCategory;
                 unit2Pos = position;
                 setUnit2(spinnerUnit2, position);
-
 
 
             }
@@ -142,27 +141,7 @@ public class SelectionFragment extends Fragment {
                 Conversions.COLUMN_NAME_CATEGORY
         };
 
-        dbHelper = new ConversionDbHelper(getContext());
-        db = dbHelper.getWritableDatabase();
-
-        Cursor cursor = db.query(true,
-                Conversions.TABLE_NAME,
-                projection,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null);
-
-        ArrayList<String> categories = new ArrayList<>();
-        while (cursor.moveToNext()) {
-            String itemId = cursor.getString(
-                    cursor.getColumnIndexOrThrow(Conversions.COLUMN_NAME_CATEGORY));
-            categories.add(itemId);
-        }
-
-        cursor.close();
+        ArrayList<String> categories = dbMethods.selectStatement(true, projection, null, null);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, categories);
 
@@ -183,33 +162,15 @@ public class SelectionFragment extends Fragment {
                 spinnerUnitType.getAdapter().getItem(position).toString()
         };
 
-        Cursor cursor = db.query(
-                true,
-                Conversions.TABLE_NAME,
-                projection,
-                selection,
-                selectionArgs,
-                null,
-                null,
-                null,
-                null);
-
-        ArrayList<String> units = new ArrayList<>();
-        while (cursor.moveToNext()) {
-            String itemId = cursor.getString(
-                    cursor.getColumnIndexOrThrow(Conversions.COLUMN_NAME_PRIMARY_UNIT));
-            units.add(itemId);
-        }
-
-        cursor.close();
+        ArrayList<String> units = dbMethods.selectStatement(true, projection, selection, selectionArgs);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, units);
 
 
         //Ensuring that whenever the unit spinners are populated, unit2 is always position 1
-        System.out.println("a");
+
         spinnerUnit1.setAdapter(adapter);
-        System.out.println("b");
+
 
         spinnerUnit2.setAdapter(adapter);
         //Needed ass unit2Cat is only changed one the onchangelistener is called, which it isn't
@@ -221,20 +182,19 @@ public class SelectionFragment extends Fragment {
         spinnerUnit2.setSelection(1);
         unit1Pos = 0;
         unit2Pos = 1;
-        System.out.println("c");
 
     }
 
     private void setUnit1(Spinner unit1, int pos) {
         model.loadUnit1(unit1.getAdapter().getItem(pos).toString());
-        if (model.getUnit1() != null && unit1Cat == unit2Cat && unit1Pos!=unit2Pos)
-        setFormula();
+        if (model.getUnit1() != null && unit1Cat == unit2Cat && unit1Pos != unit2Pos)
+            setFormula();
     }
 
     private void setUnit2(Spinner unit2, int pos) {
         model.loadUnit2(unit2.getAdapter().getItem(pos).toString());
-        if (model.getUnit2() != null && unit1Cat == unit2Cat && unit1Pos!=unit2Pos)
-        setFormula();
+        if (model.getUnit2() != null && unit1Cat == unit2Cat && unit1Pos != unit2Pos)
+            setFormula();
     }
 
     private void setFormula() {
@@ -252,40 +212,9 @@ public class SelectionFragment extends Fragment {
 
         };
 
-        System.out.println(selectionArgs[0]);
-        System.out.println(selectionArgs[1]);
-        System.out.println("£££££££££££££££"+model.getUnit1().getValue());
-        System.out.println(unit1Cat);
-        System.out.println("$$$$$$$$$$$$$$$"+model.getUnit2().getValue());
-        System.out.println(unit2Cat);
+        ArrayList<String> formula = dbMethods.selectStatement(true, projection, selection, selectionArgs);
 
-            //todo change these?
-            Cursor cursor = db.query(
-                    true,
-                    Conversions.TABLE_NAME,
-                    projection,
-                    selection,
-                    selectionArgs,
-                    null,
-                    null,
-                    null,
-                    null);
-
-            System.out.println("SELECT "+projection[0] + " WHERE " + selection+ " = " + selectionArgs[0] + " " + selectionArgs[1]);
-
-            // todo assertion for only one result?
-            ArrayList<String> formula = new ArrayList<>();
-            while (cursor.moveToNext()) {
-                String itemId = cursor.getString(
-                        cursor.getColumnIndexOrThrow(Conversions.COLUMN_NAME_FORMULA));
-                formula.add(itemId);
-            }
-
-            cursor.close();
-
-            System.out.println("777777777777777777777777777777777777777777777777777777777777777777777777" + formula.get(0));
-
-            model.loadFormula(Double.parseDouble(formula.get(0)));
+        model.loadFormula(Double.parseDouble(formula.get(0)));
 
 
     }
