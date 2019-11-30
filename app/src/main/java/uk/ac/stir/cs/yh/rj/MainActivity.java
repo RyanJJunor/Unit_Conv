@@ -1,16 +1,12 @@
 package uk.ac.stir.cs.yh.rj;
 
-import uk.ac.stir.cs.yh.rj.db.ConversionDatabaseContract.Conversions;
 import uk.ac.stir.cs.yh.rj.db.ConversionDbHelper;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-import android.content.ContentValues;
 import android.content.pm.ActivityInfo;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -22,10 +18,6 @@ public class MainActivity extends AppCompatActivity {
 
     ConversionDbHelper dbHelper;
     SQLiteDatabase db;
-
-    PagerAdapter pagerAdapterConversion;
-    ViewPager viewPager;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,44 +93,6 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
-    }
-
-    //TODO fix this
-    private double addConversion(String name, String formula, String category) {
-
-        ConversionDbHelper dbHelper = new ConversionDbHelper(this);
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-
-        ContentValues values = new ContentValues();
-        values.put(Conversions.COLUMN_NAME_NAME, name);
-        values.put(Conversions.COLUMN_NAME_FORMULA, formula);
-        values.put(Conversions.COLUMN_NAME_CATEGORY, category);
-
-        long newRowId = db.insert(Conversions.TABLE_NAME, null, values);
-        System.out.println("NEW ROW ID: " + newRowId);
-
-        return newRowId;
-    }
-
-
-    public void onUnitsSelected() {
-
-        ConversionFragment frag2 = new ConversionFragment();
-
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
-        transaction.replace(R.id.pagerAdapterConvert, frag2);
-        transaction.addToBackStack(null);
-
-        transaction.commit();
-
-    }
-
-    public void onAttachFragment(Fragment fragment) {
-        if (fragment instanceof SelectionFragment) {
-            SelectionFragment frag1 = (SelectionFragment) fragment;
-
-        }
     }
 
 }

@@ -1,15 +1,11 @@
 package uk.ac.stir.cs.yh.rj;
 
-import android.content.pm.ActivityInfo;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
@@ -20,14 +16,11 @@ import androidx.lifecycle.ViewModelProvider;
 import java.util.ArrayList;
 
 import uk.ac.stir.cs.yh.rj.db.ConversionDatabaseContract.Conversions;
-import uk.ac.stir.cs.yh.rj.db.ConversionDbHelper;
 import uk.ac.stir.cs.yh.rj.db.ConversionDbMethods;
 
 public class SelectionFragment extends Fragment {
-    //TODO read more about passing information and interfaces
     private SharedViewModel model;
-    ConversionDbMethods dbMethods;
-    private ArrayList<String> selectedUnits = new ArrayList<>(2);
+    private ConversionDbMethods dbMethods;
     private int unit1Pos;
     private int unit2Pos;
     private int currentCategory;
