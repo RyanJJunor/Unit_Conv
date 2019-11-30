@@ -14,6 +14,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import uk.ac.stir.cs.yh.rj.db.ConversionDatabaseContract.Conversions;
 import uk.ac.stir.cs.yh.rj.db.ConversionDbHelper;
 
@@ -70,26 +72,6 @@ public class NewConversionFragment extends Fragment {
             //todo make more robust
             if (!unit1.equals("") || !unit2.equals("") || !unitRate.equals("")) {
 
-                String query =
-                        "INSERT INTO " + Conversions.TABLE_NAME + " (" +
-                                Conversions.COLUMN_NAME_PRIMARY_UNIT + "," +
-                                Conversions.COLUMN_NAME_SECONDARY_UNIT + "," +
-                                Conversions.COLUMN_NAME_FORMULA + ", " +
-                                Conversions.COLUMN_NAME_CATEGORY + ", " +
-                                Conversions.COLUMN_NAME_ADDED_CONVERSION_UNIQUE + ") " +
-                                "VALUES " +
-                                "('" + unit1 + "'," +
-                                "'" + unit2 + "'," +
-                                "'" + unitRate + "'," +
-                                "'" + name + "'), " +
-                                "('" + unit2 + "'," +
-                                "'" + unit1 + "'," +
-                                "'" + (1 / (Double.parseDouble(unitRate))) + "'," +
-                                "'" + name + "'," +
-                                "'" + name + "')";
-
-                //db.execSQL(query);
-
                 ContentValues cv = new ContentValues();
 
                 cv.put(Conversions.COLUMN_NAME_PRIMARY_UNIT, unit1);
@@ -100,17 +82,20 @@ public class NewConversionFragment extends Fragment {
 
                 long result = db.insertWithOnConflict(Conversions.TABLE_NAME, null, cv, SQLiteDatabase.CONFLICT_IGNORE);
 
-                System.out.println(result);
+                if (result != -1) {
+                    cv.put(Conversions.COLUMN_NAME_PRIMARY_UNIT, unit2);
+                    cv.put(Conversions.COLUMN_NAME_SECONDARY_UNIT, unit1);
+                    cv.put(Conversions.COLUMN_NAME_FORMULA, (1 / (Double.parseDouble(unitRate))));
+                    cv.put(Conversions.COLUMN_NAME_CATEGORY, name);
+                    cv.remove(Conversions.COLUMN_NAME_ADDED_CONVERSION_UNIQUE);
+
+                    db.insert(Conversions.TABLE_NAME, null, cv);
+
+                    //todo use resource
+                    Snackbar.make(view, "Conversion Added", 1000).show();
+                }
 
 
-
-                cv.put(Conversions.COLUMN_NAME_PRIMARY_UNIT, unit2);
-                cv.put(Conversions.COLUMN_NAME_SECONDARY_UNIT, unit1);
-                cv.put(Conversions.COLUMN_NAME_FORMULA, (1 / (Double.parseDouble(unitRate))));
-                cv.put(Conversions.COLUMN_NAME_CATEGORY, name);
-                cv.remove(Conversions.COLUMN_NAME_ADDED_CONVERSION_UNIQUE);
-
-                db.insert(Conversions.TABLE_NAME, null, cv);
 
             }
 
