@@ -69,7 +69,7 @@ public class NewConversionFragment extends Fragment {
             String unitRate = editTextNewRate.getText().toString();
 
 
-            //todo make more robust
+            //todo make more robust and move to COnversionDbMethods
             if (!unit1.equals("") || !unit2.equals("") || !unitRate.equals("")) {
 
                 ContentValues cv = new ContentValues();
