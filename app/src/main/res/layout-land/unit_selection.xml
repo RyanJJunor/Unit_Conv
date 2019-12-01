@@ -8,43 +8,43 @@
 
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/textViewUnitCategory"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/textUnitType"
-        app:layout_constraintBottom_toTopOf="@+id/spinner"
-        app:layout_constraintStart_toStartOf="@+id/spinner"
+        app:layout_constraintBottom_toTopOf="@+id/spinnerUnitCategory"
+        app:layout_constraintStart_toStartOf="@+id/spinnerUnitCategory"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/textViewUnitTo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/textUnit2"
-        app:layout_constraintBottom_toTopOf="@+id/spinner3"
-        app:layout_constraintStart_toStartOf="@+id/spinner3"
-        app:layout_constraintTop_toBottomOf="@+id/spinner2" />
+        app:layout_constraintBottom_toTopOf="@+id/SpinnerUnitTo"
+        app:layout_constraintStart_toStartOf="@+id/SpinnerUnitTo"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerUnitFrom" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/textViewUnitFrom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/textUnit1"
-        app:layout_constraintBottom_toTopOf="@+id/spinner2"
-        app:layout_constraintStart_toStartOf="@+id/spinner2"
-        app:layout_constraintTop_toBottomOf="@+id/spinner" />
+        app:layout_constraintBottom_toTopOf="@+id/spinnerUnitFrom"
+        app:layout_constraintStart_toStartOf="@+id/spinnerUnitFrom"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerUnitCategory" />
 
     <Spinner
-        android:id="@+id/spinner2"
+        android:id="@+id/spinnerUnitFrom"
         style="@style/Widget.AppCompat.Spinner.Underlined"
         android:layout_width="200dp"
         android:layout_height="50dp"
-        app:layout_constraintBottom_toTopOf="@+id/textView4"
-        app:layout_constraintStart_toStartOf="@+id/textView4"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+        app:layout_constraintBottom_toTopOf="@+id/textViewUnitTo"
+        app:layout_constraintStart_toStartOf="@+id/textViewUnitTo"
+        app:layout_constraintTop_toBottomOf="@+id/textViewUnitFrom" />
 
     <Spinner
-        android:id="@+id/spinner3"
+        android:id="@+id/SpinnerUnitTo"
         style="@style/Widget.AppCompat.Spinner.Underlined"
         android:layout_width="200dp"
         android:layout_height="50dp"
@@ -52,16 +52,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewUnitTo" />
 
     <Spinner
-        android:id="@+id/spinner"
+        android:id="@+id/spinnerUnitCategory"
         style="@style/Widget.AppCompat.Spinner.Underlined"
         android:layout_width="200dp"
         android:layout_height="50dp"
         android:textAlignment="center"
-        app:layout_constraintBottom_toTopOf="@+id/textView3"
-        app:layout_constraintStart_toStartOf="@+id/textView3"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintBottom_toTopOf="@+id/textViewUnitFrom"
+        app:layout_constraintStart_toStartOf="@+id/textViewUnitFrom"
+        app:layout_constraintTop_toBottomOf="@+id/textViewUnitCategory" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

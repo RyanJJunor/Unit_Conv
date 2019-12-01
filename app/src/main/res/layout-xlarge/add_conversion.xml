@@ -13,12 +13,12 @@
         android:layout_height="50dp"
         android:ems="10"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/textView3"
-        app:layout_constraintStart_toStartOf="@+id/textView3"
-        app:layout_constraintTop_toBottomOf="@+id/textView6" />
+        app:layout_constraintBottom_toTopOf="@+id/textViewNewUnitFrom"
+        app:layout_constraintStart_toStartOf="@+id/textViewNewUnitFrom"
+        app:layout_constraintTop_toBottomOf="@+id/textViewNewName" />
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/textViewNewName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="1. Conversion Name:"
@@ -34,16 +34,16 @@
         android:inputType="textPersonName"
         app:layout_constraintBottom_toTopOf="@+id/buttonSelectNewConversion"
         app:layout_constraintStart_toStartOf="@+id/buttonSelectNewConversion"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewNewUnitTo" />
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/textViewNewConvUnit2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="3. Unit to Convert to:"
-        app:layout_constraintBottom_toTopOf="@+id/editTextNewUnit2"
-        app:layout_constraintStart_toStartOf="@+id/editTextNewUnit2"
-        app:layout_constraintTop_toBottomOf="@+id/editTextNewUnit1" />
+        app:layout_constraintBottom_toTopOf="@+id/editTextNewUnitFrom"
+        app:layout_constraintStart_toStartOf="@+id/editTextNewUnitFrom"
+        app:layout_constraintTop_toBottomOf="@+id/editTextNewUnitTo" />
 
     <Button
         android:id="@+id/buttonSelectNewConversion"
@@ -52,52 +52,46 @@
         android:text="@string/stringButtonSelect"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextNewRate" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/textViewNewUnitFrom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="2. Unit to Convert From:"
-        app:layout_constraintBottom_toTopOf="@+id/editTextNewUnit1"
-        app:layout_constraintStart_toStartOf="@+id/editTextNewUnit1"
+        app:layout_constraintBottom_toTopOf="@+id/editTextNewUnitTo"
+        app:layout_constraintStart_toStartOf="@+id/editTextNewUnitTo"
         app:layout_constraintTop_toBottomOf="@+id/editTextConversionName" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/textViewNewUnitTo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="4. Conversion Rate: (e.g. 0.001 or 60)"
         app:layout_constraintBottom_toTopOf="@+id/editTextNewRate"
         app:layout_constraintStart_toStartOf="@+id/editTextNewRate"
-        app:layout_constraintTop_toBottomOf="@+id/editTextNewUnit2" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextNewUnitFrom" />
 
     <EditText
-        android:id="@+id/editTextNewUnit1"
+        android:id="@+id/editTextNewUnitTo"
         android:layout_width="200dp"
         android:layout_height="50dp"
         android:ems="10"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/textView5"
-        app:layout_constraintStart_toStartOf="@+id/textView5"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+        app:layout_constraintBottom_toTopOf="@+id/textViewNewConvUnit2"
+        app:layout_constraintStart_toStartOf="@+id/textViewNewConvUnit2"
+        app:layout_constraintTop_toBottomOf="@+id/textViewNewUnitFrom" />
 
     <EditText
-        android:id="@+id/editTextNewUnit2"
+        android:id="@+id/editTextNewUnitFrom"
         android:layout_width="200dp"
         android:layout_height="50dp"
         android:ems="10"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/textView4"
-        app:layout_constraintStart_toStartOf="@+id/textView4"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
-
-    <androidx.constraintlayout.widget.Barrier
-        android:id="@+id/barrier"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:barrierDirection="left"
-        tools:layout_editor_absoluteX="411dp" />
+        app:layout_constraintBottom_toTopOf="@+id/textViewNewUnitTo"
+        app:layout_constraintStart_toStartOf="@+id/textViewNewUnitTo"
+        app:layout_constraintTop_toBottomOf="@+id/textViewNewConvUnit2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

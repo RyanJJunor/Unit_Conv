@@ -8,6 +8,7 @@ import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.pm.ActivityInfo;
+import android.content.res.Resources;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.widget.Button;
@@ -23,6 +24,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
+
+        System.out.println(getResources().getString(R.string.cup_ml));
 
         Button buttonRotate = findViewById(R.id.buttonRotate);
 
@@ -44,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
         final ViewPager viewPager = findViewById(R.id.pagerAdapterConvert);
         final ConversionPagerAdapter adapter = new ConversionPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
 
+        viewPager.setOffscreenPageLimit(2);
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {

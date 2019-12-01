@@ -1,6 +1,9 @@
 package uk.ac.stir.cs.yh.rj.db;
 
+import android.content.res.Resources;
 import android.provider.BaseColumns;
+
+import uk.ac.stir.cs.yh.rj.R;
 
 public final class ConversionDatabaseContract {
 
@@ -9,7 +12,6 @@ public final class ConversionDatabaseContract {
 
     public static class Conversions implements BaseColumns {
         public static final String TABLE_NAME = "conversion";
-        public static final String COLUMN_NAME_NAME = "name";
         public static final String COLUMN_NAME_PRIMARY_UNIT = "unit_1";
         public static final String COLUMN_NAME_SECONDARY_UNIT = "unit_2";
         public static final String COLUMN_NAME_FORMULA = "formula";

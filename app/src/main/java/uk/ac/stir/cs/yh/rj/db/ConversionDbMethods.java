@@ -8,13 +8,12 @@ import java.util.ArrayList;
 
 public class ConversionDbMethods {
 
-    private ConversionDbHelper dbHelper;
     private SQLiteDatabase db;
 
 
     public ConversionDbMethods(Context context) {
 
-        dbHelper = new ConversionDbHelper(context);
+        ConversionDbHelper dbHelper = new ConversionDbHelper(context);
         db = dbHelper.getWritableDatabase();
 
     }

@@ -1,42 +1,11 @@
 <resources>
     <string name="app_name">Unit_Conv</string>
     <string name="stringTitle">Unit Converter</string>
-    <string name="stringUnits">Units</string>
     <string name="stringButtonSelect">Select</string>
     <string name="textUnitType">1. Select Unit Type:</string>
     <string name="textUnit1">2. Select Unit to Convert From:</string>
     <string name="textUnit2">3. Select Unit to Convert to:</string>
-    <string name="stringConversionTitle">Conversion TODO</string>
-    <string name="backButton">Back</string>
-    <string-array name="stringUnitType">
-        <item>Weight</item>
-        <item>Distance</item>
-        <item>Speed</item>
-        <item>Volume</item>
-        <item>Time</item>
-    </string-array>
-    <string-array name="stringWeightUnit">
-        <item>Gram</item>
-        <item>Kilogram</item>
-        <item>Pound</item>
-        <item>Stone</item>
-    </string-array>
-    <string-array name="stringDistanceUnit">
-        <item>Metre</item>
-        <item>Kilometre</item>
-        <item>Foot</item>
-        <item>Mile</item>
-    </string-array>
-    <string-array name="stringVolumeUnit">
-        <item>Millilitre</item>
-        <item>Litre</item>
-        <item>Imperial Cup</item>
-        <item>Imperial Pint</item>
-    </string-array>
-    <string-array name="stringTimeUnit">
-        <item>Second</item>
-        <item>Minute</item>
-        <item>Hour</item>
-        <item>Day</item>
-    </string-array>
+    <string name="snackConvAdded">Conversion Added</string>
+    <string name="snackCharLimit">Only 10 characters are allowed</string>
+    <string name="cup_ml">(\'Cup\', \'Millilitre\', \'284.131\', \'Volume\')</string>
 </resources>

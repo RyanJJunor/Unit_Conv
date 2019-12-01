@@ -49,9 +49,9 @@ public class NewConversionFragment extends Fragment {
 
         EditText editTextConversionName = view.findViewById(R.id.editTextConversionName);
 
-        EditText editTextNewUnit1 = view.findViewById(R.id.editTextNewUnit1);
+        EditText editTextNewUnit1 = view.findViewById(R.id.editTextNewUnitFrom);
 
-        EditText editTextNewUnit2 = view.findViewById(R.id.editTextNewUnit2);
+        EditText editTextNewUnit2 = view.findViewById(R.id.editTextNewUnitTo);
 
         EditText editTextNewRate = view.findViewById(R.id.editTextNewRate);
 
@@ -92,7 +92,7 @@ public class NewConversionFragment extends Fragment {
                     db.insert(Conversions.TABLE_NAME, null, cv);
 
                     //todo use resource
-                    Snackbar.make(view, "Conversion Added", 1000).show();
+                    Snackbar.make(view, getString(R.string.snackConvAdded), 1000).show();
                 }
 
 

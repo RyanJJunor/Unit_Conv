@@ -1,6 +1,7 @@
 package uk.ac.stir.cs.yh.rj;
 
 import android.os.Bundle;
+import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +18,6 @@ import androidx.lifecycle.ViewModelProvider;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 
 public class ConversionFragment extends Fragment {
 
@@ -54,16 +54,18 @@ public class ConversionFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onStart();
 
+        view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
+
         model = new ViewModelProvider(this.getActivity(), new ViewModelProvider.NewInstanceFactory()).get(SharedViewModel.class);
         model.getUnit1().observe(this, unit1 -> {
 
-            TextView textUnit1 = view.findViewById(R.id.textView10);
+            TextView textUnit1 = view.findViewById(R.id.textViewUnitToConvertFrom);
             textUnit1.setText(unit1);
 
         });
 
         model.getUnit2().observe(this, unit2 -> {
-            TextView textUnit2 = view.findViewById(R.id.textView11);
+            TextView textUnit2 = view.findViewById(R.id.textViewUnitToConvertTo);
             textUnit2.setText(unit2);
         });
 
@@ -72,13 +74,11 @@ public class ConversionFragment extends Fragment {
             convert(true);
         });
 
-
         editTextUnit1 = view.findViewById(R.id.editTextUnit1);
-
         editTextUnit2 = view.findViewById(R.id.editTextUnit2);
 
         //todo use resource
-        snack = Snackbar.make(view, "Only 10 characters are allowed", 1000);
+        snack = Snackbar.make(view, getString(R.string.snackCharLimit), 1000);
 
 
         //todo fix appending?
@@ -168,6 +168,8 @@ public class ConversionFragment extends Fragment {
     }
 
     private void convert(boolean gettingFormula) {
+
+        System.out.println(gettingFormula);
 
         if (editTextUnit1.length() == 10 && !gettingFormula && !snack.isShown()) {
             snack.show();

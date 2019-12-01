@@ -29,7 +29,8 @@ public class SelectionFragment extends Fragment {
 
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
 
         dbMethods = new ConversionDbMethods(getContext());
@@ -54,9 +55,9 @@ public class SelectionFragment extends Fragment {
         model = new ViewModelProvider(this.getActivity(), new ViewModelProvider.NewInstanceFactory()).get(SharedViewModel.class);
 
 
-        final Spinner spinnerUnitType = view.findViewById(R.id.spinner);
-        final Spinner spinnerUnit1 = view.findViewById(R.id.spinner2);
-        final Spinner spinnerUnit2 = view.findViewById(R.id.spinner3);
+        final Spinner spinnerUnitType = view.findViewById(R.id.spinnerUnitCategory);
+        final Spinner spinnerUnit1 = view.findViewById(R.id.spinnerUnitFrom);
+        final Spinner spinnerUnit2 = view.findViewById(R.id.SpinnerUnitTo);
 
         spinnerUnit1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
