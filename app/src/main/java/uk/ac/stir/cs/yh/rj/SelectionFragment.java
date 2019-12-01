@@ -1,11 +1,13 @@
 package uk.ac.stir.cs.yh.rj;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
@@ -14,6 +16,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import uk.ac.stir.cs.yh.rj.db.ConversionDatabaseContract.Conversions;
 import uk.ac.stir.cs.yh.rj.db.ConversionDbMethods;
@@ -27,11 +30,16 @@ public class SelectionFragment extends Fragment {
     private int unit1Cat;
     private int unit2Cat;
 
+    private Spinner spinnerUnitType;
+    private Spinner spinnerUnit1;
+    private Spinner spinnerUnit2;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        this.getFragmentManager().beginTransaction().add(this, "selection_fragment");
 
         dbMethods = new ConversionDbMethods(getContext());
     }
@@ -54,25 +62,23 @@ public class SelectionFragment extends Fragment {
 
         model = new ViewModelProvider(this.getActivity(), new ViewModelProvider.NewInstanceFactory()).get(SharedViewModel.class);
 
-
-        final Spinner spinnerUnitType = view.findViewById(R.id.spinnerUnitCategory);
-        final Spinner spinnerUnit1 = view.findViewById(R.id.spinnerUnitFrom);
-        final Spinner spinnerUnit2 = view.findViewById(R.id.SpinnerUnitTo);
+        spinnerUnitType = view.findViewById(R.id.spinnerUnitCategory);
+        spinnerUnit1 = view.findViewById(R.id.spinnerUnitFrom);
+        spinnerUnit2 = view.findViewById(R.id.spinnerUnitTo);
 
         spinnerUnit1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                if (unit2Pos == position) {
+                if (model.getUnit2Pos() == position) {
 
-                    unit2Pos = unit1Pos;
+                    model.setUnit2Pos(model.getUnit1Pos());
 
-
-                    spinnerUnit2.setSelection(unit2Pos);
-                    setUnit2(spinnerUnit2, unit2Pos);
+                    spinnerUnit2.setSelection(model.getUnit2Pos());
+                    setUnit2(spinnerUnit2, model.getUnit2Pos());
                 }
                 unit1Cat = currentCategory;
-                unit1Pos = position;
+                model.setUnit1Pos(position);
                 setUnit1(spinnerUnit1, position);
 
 
@@ -88,16 +94,15 @@ public class SelectionFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                if (unit1Pos == position) {
+                if (model.getUnit1Pos() == position) {
 
-                    unit1Pos = unit2Pos;
+                    model.setUnit1Pos(model.getUnit2Pos());
 
-
-                    spinnerUnit1.setSelection(unit1Pos);
-                    setUnit1(spinnerUnit1, unit1Pos);
+                    spinnerUnit1.setSelection(model.getUnit1Pos());
+                    setUnit1(spinnerUnit1, model.getUnit1Pos());
                 }
                 unit2Cat = currentCategory;
-                unit2Pos = position;
+                model.setUnit2Pos(position);
                 setUnit2(spinnerUnit2, position);
 
 
@@ -112,10 +117,16 @@ public class SelectionFragment extends Fragment {
         spinnerUnitType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
                 currentCategory = position;
-                populateUnitSpinner(spinnerUnitType, position, spinnerUnit1, spinnerUnit2);
 
+                if (model.getCategory() != currentCategory){
+
+                    model.setUnit1Pos(0);
+                    model.setUnit2Pos(1);
+                }
+
+                populateUnitSpinner(spinnerUnitType, position, spinnerUnit1, spinnerUnit2);
+                model.setCategory(currentCategory);
             }
 
             @Override
@@ -126,6 +137,12 @@ public class SelectionFragment extends Fragment {
 
         populateUnitTypeSpinner(spinnerUnitType);
 
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
     }
 
     //todo tidy up, fix context?
@@ -145,6 +162,7 @@ public class SelectionFragment extends Fragment {
 
     private void populateUnitSpinner(Spinner spinnerUnitType, int position, Spinner spinnerUnit1, Spinner spinnerUnit2) {
 
+
         String[] projection = {
                 Conversions.COLUMN_NAME_PRIMARY_UNIT
         };
@@ -160,35 +178,35 @@ public class SelectionFragment extends Fragment {
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, units);
 
-
-        //Ensuring that whenever the unit spinners are populated, unit2 is always position 1
-
         spinnerUnit1.setAdapter(adapter);
-
-
         spinnerUnit2.setAdapter(adapter);
-        //Needed ass unit2Cat is only changed one the onchangelistener is called, which it isn't
-        // until after this method is finished. So when changing unit type, at this point, unit1
-        // changes to the new type before unit2 does, but the two category variables are still the
-        // same
-        unit2Cat = currentCategory;
-        setUnit2(spinnerUnit2, 1);
-        spinnerUnit2.setSelection(1);
-        unit1Pos = 0;
-        unit2Pos = 1;
+
+        //The first time the fragment is created, start with the units 0 and 1 selected
+        if (model.getUnit1Pos() == -1) {
+            spinnerUnit1.setSelection(0);
+            spinnerUnit2.setSelection(1);
+            model.setUnit1Pos(0);
+            model.setUnit2Pos(1);
+        }else{
+            spinnerUnit1.setSelection(model.getUnit1Pos());
+            spinnerUnit2.setSelection(model.getUnit2Pos());
+        }
+
 
     }
 
     private void setUnit1(Spinner unit1, int pos) {
         model.loadUnit1(unit1.getAdapter().getItem(pos).toString());
-        if (model.getUnit1() != null && unit1Cat == unit2Cat && unit1Pos != unit2Pos)
+        if (model.getUnit1().getValue() != null && model.getUnit2().getValue() != null && unit1Cat == unit2Cat && model.getUnit1Pos() != model.getUnit2Pos()) {
             setFormula();
+        }
     }
 
     private void setUnit2(Spinner unit2, int pos) {
         model.loadUnit2(unit2.getAdapter().getItem(pos).toString());
-        if (model.getUnit2() != null && unit1Cat == unit2Cat && unit1Pos != unit2Pos)
+        if (model.getUnit2().getValue() != null && model.getUnit1().getValue() != null && unit1Cat == unit2Cat && model.getUnit1Pos() != model.getUnit2Pos()) {
             setFormula();
+        }
     }
 
     private void setFormula() {
@@ -212,5 +230,6 @@ public class SelectionFragment extends Fragment {
 
 
     }
+
 
 }

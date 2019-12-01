@@ -13,6 +13,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -35,8 +36,8 @@ public class ConversionFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
+        this.getFragmentManager().beginTransaction().add(this, "conversion_fragment");
 
     }
 
@@ -55,6 +56,7 @@ public class ConversionFragment extends Fragment {
         super.onStart();
 
         view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
+
 
         model = new ViewModelProvider(this.getActivity(), new ViewModelProvider.NewInstanceFactory()).get(SharedViewModel.class);
         model.getUnit1().observe(this, unit1 -> {
@@ -168,8 +170,6 @@ public class ConversionFragment extends Fragment {
     }
 
     private void convert(boolean gettingFormula) {
-
-        System.out.println(gettingFormula);
 
         if (editTextUnit1.length() == 10 && !gettingFormula && !snack.isShown()) {
             snack.show();

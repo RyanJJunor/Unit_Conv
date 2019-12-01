@@ -26,6 +26,8 @@ public class ConversionPagerAdapter extends FragmentStatePagerAdapter {
                 return new ConversionFragment();
             case 2:
                 return new NewConversionFragment();
+            case 3:
+                return new RemoveConversionFragment();
             default:
                 return null;
 

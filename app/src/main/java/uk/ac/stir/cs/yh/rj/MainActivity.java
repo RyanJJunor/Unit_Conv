@@ -2,13 +2,13 @@ package uk.ac.stir.cs.yh.rj;
 
 import uk.ac.stir.cs.yh.rj.db.ConversionDbHelper;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.pm.ActivityInfo;
-import android.content.res.Resources;
+import android.content.res.Configuration;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.widget.Button;
@@ -24,8 +24,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
-
-        System.out.println(getResources().getString(R.string.cup_ml));
 
         Button buttonRotate = findViewById(R.id.buttonRotate);
 
@@ -45,16 +43,19 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         final ViewPager viewPager = findViewById(R.id.pagerAdapterConvert);
-        final ConversionPagerAdapter adapter = new ConversionPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
+        viewPager.setOffscreenPageLimit(3);
 
-        viewPager.setOffscreenPageLimit(2);
+
+        final ConversionPagerAdapter adapter = new ConversionPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void
             onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
+
 
             }
 
@@ -70,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //Checks to ensure the right layout is being used
-        if (findViewById(R.id.pagerAdapterConvert) != null) {
+        /*if (findViewById(R.id.pagerAdapterConvert) != null) {
 
 
             // If being restored from a previous state do nothing
@@ -95,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
         //TODO Handle this
         else {
 
-        }
+        }*/
 
     }
 
