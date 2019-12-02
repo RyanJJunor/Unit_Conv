@@ -18,12 +18,17 @@ public class SharedViewModel extends ViewModel {
     private int unit1Pos;
     private int unit2Pos;
     private int category;
+    // a boolean to say if a row has been removed and to not try and get a conversion rate until
+    // both units have been updated to units that still exist
+    private boolean rowRemoved;
 
     public SharedViewModel() {
 
         // This is to indicate that the selection fragment has not been created before
         unit1Pos = -1;
         unit2Pos = -1;
+
+        rowRemoved = false;
     }
 
     LiveData<String> getUnit1() {
@@ -96,5 +101,13 @@ public class SharedViewModel extends ViewModel {
 
     void setCategory(int category) {
         this.category = category;
+    }
+
+    public boolean isRowRemoved() {
+        return rowRemoved;
+    }
+
+    public void setRowRemoved(boolean rowRemoved) {
+        this.rowRemoved = rowRemoved;
     }
 }

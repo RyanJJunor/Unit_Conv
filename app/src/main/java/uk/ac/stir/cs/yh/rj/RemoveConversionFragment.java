@@ -12,6 +12,7 @@ import android.widget.Spinner;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.snackbar.Snackbar;
 
@@ -28,6 +29,7 @@ public class RemoveConversionFragment extends Fragment {
     private ConversionDbMethods dbMethods;
     private Spinner spinnerConversions;
     private int spinnerPos;
+    private SharedViewModel model;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -52,6 +54,8 @@ public class RemoveConversionFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        model = new ViewModelProvider(this.getActivity(), new ViewModelProvider.NewInstanceFactory()).get(SharedViewModel.class);
 
         dbMethods = new ConversionDbMethods(getContext());
 
@@ -85,18 +89,24 @@ public class RemoveConversionFragment extends Fragment {
 
             if (dbMethods.deleteStatement(selection, selectionArgs) != 0) {
 
+                // when a row is deleted the selection fragment attempts to get a formula for units
+                // from different categories, this is used to tell the selection fragment to not try
+                // and get a conversion rate until both units have been updated to units that still
+                // exist
+                model.setRowRemoved(true);
+
                 populateSpinner();
                 Snackbar.make(view, getString(R.string.conversion_removed), 2000).show();
 
 
                 //gets the fragment by its tag and refreshes it to repopulate based on the updated database
-                SelectionFragment fragment = (SelectionFragment)
-                        getFragmentManager().findFragmentByTag(getString(R.string.tag_selection));
+                    SelectionFragment fragment = (SelectionFragment)
+                            getFragmentManager().findFragmentByTag(getString(R.string.tag_selection));
 
-                getFragmentManager().beginTransaction()
-                        .detach(fragment)
-                        .attach(fragment)
-                        .commit();
+                    getFragmentManager().beginTransaction()
+                            .detach(fragment)
+                            .attach(fragment)
+                            .commit();
 
             }
 

@@ -58,7 +58,6 @@ public class SelectionFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
         model = new ViewModelProvider(this.getActivity(), new ViewModelProvider.NewInstanceFactory()).get(SharedViewModel.class);
 
         spinnerUnitType = view.findViewById(R.id.spinnerUnitCategory);
@@ -148,6 +147,7 @@ public class SelectionFragment extends Fragment {
 
     /**
      * Populates the spinner with the categories in the database
+     *
      * @param spinner the spinner that is to contain categories
      */
     private void populateUnitTypeSpinner(Spinner spinner) {
@@ -166,10 +166,11 @@ public class SelectionFragment extends Fragment {
 
     /**
      * Populates the unit spinners, and sets their selected units
+     *
      * @param spinnerUnitType the spinner that contains the conversion categories
-     * @param position the position of the category spinner's selected item
-     * @param spinnerUnit1 the spinner for the unit to convert from
-     * @param spinnerUnit2 the spinenr for the unit to convert to
+     * @param position        the position of the category spinner's selected item
+     * @param spinnerUnit1    the spinner for the unit to convert from
+     * @param spinnerUnit2    the spinner for the unit to convert to
      */
     private void populateUnitSpinner(Spinner spinnerUnitType, int position, Spinner spinnerUnit1, Spinner spinnerUnit2) {
 
@@ -209,30 +210,41 @@ public class SelectionFragment extends Fragment {
 
     /**
      * Sets the unit that is currently selected in the sharedviewmodel
+     *
      * @param unit1 the spinner that is for the unit to convert from
-     * @param pos the current position of the selected item in the spinner unit1
+     * @param pos   the current position of the selected item in the spinner unit1
      */
     private void setUnit1(Spinner unit1, int pos) {
         model.setUnit1(unit1.getAdapter().getItem(pos).toString());
         //Ensures setFormula isn't called unless both units are ready to be used (neither is null,
         // the two units are from the same category and they aren't the same unit)
-        if (model.getUnit1().getValue() != null && model.getUnit2().getValue() != null && unit1Cat == unit2Cat && model.getUnit1Pos() != model.getUnit2Pos()) {
+        if (model.getUnit1().getValue() != null && model.getUnit2().getValue() != null &&
+                unit1Cat == unit2Cat && model.getUnit1Pos() != model.getUnit2Pos() &&
+                !model.isRowRemoved()) {
             setFormula();
         }
     }
 
     /**
      * Sets the unit that is currently selected in the sharedviewmodel
+     *
      * @param unit2 the spinner that is for the unit to convert from
-     * @param pos the current position of the selected item in the spinner unit2
+     * @param pos   the current position of the selected item in the spinner unit2
      */
     private void setUnit2(Spinner unit2, int pos) {
         model.setUnit2(unit2.getAdapter().getItem(pos).toString());
         //Ensures setFormula isn't called unless both units are ready to be used (neither is null,
         // the two units are from the same category and they aren't the same unit)
-        if (model.getUnit2().getValue() != null && model.getUnit1().getValue() != null && unit1Cat == unit2Cat && model.getUnit1Pos() != model.getUnit2Pos()) {
+        if (model.getUnit2().getValue() != null && model.getUnit1().getValue() != null &&
+                unit1Cat == unit2Cat && model.getUnit1Pos() != model.getUnit2Pos() &&
+                !model.isRowRemoved()) {
             setFormula();
         }
+        //When removing a row from the database, if that row contained the current conversion, then
+        // it would try to get the conversion rate between two units from different categories. This
+        // where both units would be ready to be used for getting a ratio so this is where the flag
+        // stating that a row has been removed can be set to false
+        model.setRowRemoved(false);
     }
 
 
@@ -253,6 +265,12 @@ public class SelectionFragment extends Fragment {
                 model.getUnit1().getValue(), model.getUnit2().getValue()
 
         };
+
+        System.out.println(selectionArgs[0]);
+        System.out.println(selectionArgs[1]);
+        System.out.println(unit1Cat);
+        System.out.println(unit2Cat);
+        System.out.println("test: " + model.getCategory());
 
         ArrayList<String> formula = dbMethods.selectStatement(true, projection, selection, selectionArgs);
 

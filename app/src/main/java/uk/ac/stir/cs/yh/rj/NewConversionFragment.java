@@ -73,7 +73,7 @@ public class NewConversionFragment extends Fragment {
                 String[] projection = {Conversions.COLUMN_NAME_CATEGORY};
                 ArrayList<String> names = dbMethods.selectStatement(true, projection, null, null);
 
-                //Gets the number of custome conversions added
+                //Gets the number of custom conversions added
                 projection[0] = "COUNT(" + Conversions.COLUMN_NAME_ADDED_CONVERSION_UNIQUE + ")";
                 String selection = Conversions.COLUMN_NAME_ADDED_CONVERSION_UNIQUE + " IS NOT NULL";
                 ArrayList<String> customConversions = dbMethods.selectStatement(true, projection, selection, null);

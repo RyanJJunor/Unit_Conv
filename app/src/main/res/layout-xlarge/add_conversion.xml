@@ -45,9 +45,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/add_unit_to"
-        app:layout_constraintBottom_toTopOf="@+id/editTextNewUnitFrom"
-        app:layout_constraintStart_toStartOf="@+id/editTextNewUnitFrom"
-        app:layout_constraintTop_toBottomOf="@+id/editTextNewUnitTo" />
+        app:layout_constraintBottom_toTopOf="@+id/editTextNewUnitTo"
+        app:layout_constraintStart_toStartOf="@+id/editTextNewUnitTo"
+        app:layout_constraintTop_toBottomOf="@+id/editTextNewUnitFrom" />
 
     <Button
         android:id="@+id/buttonSelectNewConversion"
@@ -65,8 +65,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/add_unit_from"
-        app:layout_constraintBottom_toTopOf="@+id/editTextNewUnitTo"
-        app:layout_constraintStart_toStartOf="@+id/editTextNewUnitTo"
+        app:layout_constraintBottom_toTopOf="@+id/editTextNewUnitFrom"
+        app:layout_constraintStart_toStartOf="@+id/editTextNewUnitFrom"
         app:layout_constraintTop_toBottomOf="@+id/editTextConversionName" />
 
     <TextView
@@ -76,10 +76,10 @@
         android:text="@string/add_unit_rate"
         app:layout_constraintBottom_toTopOf="@+id/editTextNewRate"
         app:layout_constraintStart_toStartOf="@+id/editTextNewRate"
-        app:layout_constraintTop_toBottomOf="@+id/editTextNewUnitFrom" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextNewUnitTo" />
 
     <EditText
-        android:id="@+id/editTextNewUnitTo"
+        android:id="@+id/editTextNewUnitFrom"
         android:layout_width="200dp"
         android:layout_height="50dp"
         android:ems="10"
@@ -91,7 +91,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textViewNewUnitFrom" />
 
     <EditText
-        android:id="@+id/editTextNewUnitFrom"
+        android:id="@+id/editTextNewUnitTo"
         android:layout_width="200dp"
         android:layout_height="50dp"
         android:ems="10"
