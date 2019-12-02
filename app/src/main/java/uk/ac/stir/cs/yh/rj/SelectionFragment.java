@@ -139,12 +139,7 @@ public class SelectionFragment extends Fragment {
 
 
     }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-    }
-
+    
     /**
      * Populates the spinner with the categories in the database
      *
