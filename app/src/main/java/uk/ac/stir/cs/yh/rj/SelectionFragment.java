@@ -1,13 +1,11 @@
 package uk.ac.stir.cs.yh.rj;
 
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
@@ -16,16 +14,13 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import uk.ac.stir.cs.yh.rj.db.ConversionDatabaseContract.Conversions;
 import uk.ac.stir.cs.yh.rj.db.ConversionDbMethods;
 
-public class SelectionFragment extends Fragment {
+class SelectionFragment extends Fragment {
     private SharedViewModel model;
     private ConversionDbMethods dbMethods;
-    private int unit1Pos;
-    private int unit2Pos;
     private int currentCategory;
     private int unit1Cat;
     private int unit2Cat;
@@ -36,10 +31,9 @@ public class SelectionFragment extends Fragment {
 
 
     @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.getFragmentManager().beginTransaction().add(this, "selection_fragment");
+        this.getFragmentManager().beginTransaction().add(this, getString(R.string.tag_selection));
 
         dbMethods = new ConversionDbMethods(getContext());
     }
@@ -81,7 +75,6 @@ public class SelectionFragment extends Fragment {
                 model.setUnit1Pos(position);
                 setUnit1(spinnerUnit1, position);
 
-
             }
 
             @Override
@@ -105,7 +98,6 @@ public class SelectionFragment extends Fragment {
                 model.setUnit2Pos(position);
                 setUnit2(spinnerUnit2, position);
 
-
             }
 
             @Override
@@ -119,7 +111,7 @@ public class SelectionFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 currentCategory = position;
 
-                if (model.getCategory() != currentCategory){
+                if (model.getCategory() != currentCategory) {
 
                     model.setUnit1Pos(0);
                     model.setUnit2Pos(1);
@@ -187,7 +179,7 @@ public class SelectionFragment extends Fragment {
             spinnerUnit2.setSelection(1);
             model.setUnit1Pos(0);
             model.setUnit2Pos(1);
-        }else{
+        } else {
             spinnerUnit1.setSelection(model.getUnit1Pos());
             spinnerUnit2.setSelection(model.getUnit2Pos());
         }
@@ -197,6 +189,7 @@ public class SelectionFragment extends Fragment {
 
     private void setUnit1(Spinner unit1, int pos) {
         model.loadUnit1(unit1.getAdapter().getItem(pos).toString());
+        //Ensures setFormula isn't called unless both units are ready to be used
         if (model.getUnit1().getValue() != null && model.getUnit2().getValue() != null && unit1Cat == unit2Cat && model.getUnit1Pos() != model.getUnit2Pos()) {
             setFormula();
         }
@@ -204,6 +197,7 @@ public class SelectionFragment extends Fragment {
 
     private void setUnit2(Spinner unit2, int pos) {
         model.loadUnit2(unit2.getAdapter().getItem(pos).toString());
+        //Ensures setFormula isn't called unless both units are ready to be used
         if (model.getUnit2().getValue() != null && model.getUnit1().getValue() != null && unit1Cat == unit2Cat && model.getUnit1Pos() != model.getUnit2Pos()) {
             setFormula();
         }

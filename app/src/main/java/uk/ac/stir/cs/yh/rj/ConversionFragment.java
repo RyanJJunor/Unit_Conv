@@ -9,35 +9,32 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.snackbar.Snackbar;
 
 import java.text.DecimalFormat;
 
-public class ConversionFragment extends Fragment {
+class ConversionFragment extends Fragment {
 
-    SharedViewModel model;
+    private SharedViewModel model;
 
     //todo change name
 
-    double formula;
+    private double formula;
 
-    DecimalFormat df = new DecimalFormat("###.#########");
-
+    private DecimalFormat df = new DecimalFormat("###.#########");
+    private Snackbar snack;
     private EditText editTextUnit1;
     private EditText editTextUnit2;
-    Snackbar snack;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.getFragmentManager().beginTransaction().add(this, "conversion_fragment");
+        this.getFragmentManager().beginTransaction().add(this, getString(R.string.tag_conversion));
 
     }
 
@@ -54,8 +51,6 @@ public class ConversionFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onStart();
-
-        view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
 
 
         model = new ViewModelProvider(this.getActivity(), new ViewModelProvider.NewInstanceFactory()).get(SharedViewModel.class);
@@ -80,79 +75,90 @@ public class ConversionFragment extends Fragment {
         editTextUnit2 = view.findViewById(R.id.editTextUnit2);
 
         //todo use resource
-        snack = Snackbar.make(view, getString(R.string.snackCharLimit), 1000);
+        snack = Snackbar.make(view, getString(R.string.snackCharLimit), 2000);
 
 
         //todo fix appending?
         Button buttonNo0 = view.findViewById(R.id.buttonNo0);
         buttonNo0.setOnClickListener((View v) -> {
             editTextUnit1.append("0");
+            view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
             convert(false);
         });
 
         Button buttonNo1 = view.findViewById(R.id.buttonNo1);
         buttonNo1.setOnClickListener((View v) -> {
             editTextUnit1.append("1");
+            view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
             convert(false);
         });
 
         Button buttonNo2 = view.findViewById(R.id.buttonNo2);
         buttonNo2.setOnClickListener((View v) -> {
             editTextUnit1.append("2");
+            view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
             convert(false);
         });
 
         Button buttonNo3 = view.findViewById(R.id.buttonNo3);
         buttonNo3.setOnClickListener((View v) -> {
             editTextUnit1.append("3");
+            view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
             convert(false);
         });
 
         Button buttonNo4 = view.findViewById(R.id.buttonNo4);
         buttonNo4.setOnClickListener((View v) -> {
             editTextUnit1.append("4");
+            view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
             convert(false);
         });
 
         Button buttonNo5 = view.findViewById(R.id.buttonNo5);
         buttonNo5.setOnClickListener((View v) -> {
             editTextUnit1.append("5");
+            view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
             convert(false);
         });
 
         Button buttonNo6 = view.findViewById(R.id.buttonNo6);
         buttonNo6.setOnClickListener((View v) -> {
             editTextUnit1.append("6");
+            view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
             convert(false);
         });
 
         Button buttonNo7 = view.findViewById(R.id.buttonNo7);
         buttonNo7.setOnClickListener((View v) -> {
             editTextUnit1.append("7");
+            view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
             convert(false);
         });
 
         Button buttonNo8 = view.findViewById(R.id.buttonNo8);
         buttonNo8.setOnClickListener((View v) -> {
             editTextUnit1.append("8");
+            view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
             convert(false);
         });
 
         Button buttonNo9 = view.findViewById(R.id.buttonNo9);
         buttonNo9.setOnClickListener((View v) -> {
             editTextUnit1.append("9");
+            view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
             convert(false);
         });
 
         Button buttonDecimal = view.findViewById(R.id.buttonDecimal);
         buttonDecimal.setOnClickListener((View v) -> {
             editTextUnit1.append(".");
+            view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
             convert(false);
         });
 
         Button buttonDel = view.findViewById(R.id.buttonDel);
         buttonDel.setOnClickListener((View v) -> {
-
+            view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
             if (editTextUnit1.length() != 0)
                 editTextUnit1.getText().delete(editTextUnit1.length() - 1, editTextUnit1.length());
             convert(false);
@@ -161,7 +167,7 @@ public class ConversionFragment extends Fragment {
 
         Button buttonClear = view.findViewById(R.id.buttonClear);
         buttonClear.setOnClickListener((View v) -> {
-
+            view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
             editTextUnit1.setText("");
             editTextUnit2.setText("");
 

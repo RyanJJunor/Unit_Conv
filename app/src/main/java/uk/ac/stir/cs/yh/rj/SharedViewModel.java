@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class SharedViewModel extends ViewModel {
+class SharedViewModel extends ViewModel {
     private MutableLiveData<String> unit1;
     private MutableLiveData<String> unit2;
     private MutableLiveData<Double> formula;
@@ -19,7 +19,7 @@ public class SharedViewModel extends ViewModel {
     }
 
     public LiveData<String> getUnit1() {
-        if (unit1 == null){
+        if (unit1 == null) {
             unit1 = new MutableLiveData<>();
 
         }
@@ -28,7 +28,7 @@ public class SharedViewModel extends ViewModel {
     }
 
     public LiveData<String> getUnit2() {
-        if (unit2 == null){
+        if (unit2 == null) {
             unit2 = new MutableLiveData<>();
 
         }
@@ -37,7 +37,7 @@ public class SharedViewModel extends ViewModel {
     }
 
     public LiveData<Double> getFormula() {
-        if (formula == null){
+        if (formula == null) {
             formula = new MutableLiveData<>();
 
         }
@@ -46,18 +46,19 @@ public class SharedViewModel extends ViewModel {
     }
 
 
-    public void loadUnit1(String unit1){
+    public void loadUnit1(String unit1) {
 
         this.unit1.setValue(unit1);
 
     }
-    public void loadUnit2(String unit2){
+
+    public void loadUnit2(String unit2) {
 
         this.unit2.setValue(unit2);
 
     }
 
-    public void loadFormula(double formula){
+    public void loadFormula(double formula) {
 
         this.formula.setValue(formula);
 

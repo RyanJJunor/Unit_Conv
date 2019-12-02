@@ -33,16 +33,16 @@ public class ConversionDbMethods {
                 null,
                 null);
 
-        ArrayList<String> units = new ArrayList<>();
+        ArrayList<String> result = new ArrayList<>();
         while (cursor.moveToNext()) {
-            String itemId = cursor.getString(
+            String item = cursor.getString(
                     cursor.getColumnIndexOrThrow(projection[0]));
-            units.add(itemId);
+            result.add(item);
         }
 
         cursor.close();
 
-        return units;
+        return result;
     }
 
     public int deleteStatement(String selection, String[] selectionArgs) {
@@ -56,6 +56,8 @@ public class ConversionDbMethods {
     }
 
     public long insertStatement(String name, String unit1, String unit2, String unitRate) {
+
+
         ContentValues cv = new ContentValues();
 
         cv.put(Conversions.COLUMN_NAME_PRIMARY_UNIT, unit1);

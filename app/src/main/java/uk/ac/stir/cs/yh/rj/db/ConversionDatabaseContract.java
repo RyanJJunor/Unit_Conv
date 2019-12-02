@@ -1,13 +1,10 @@
 package uk.ac.stir.cs.yh.rj.db;
 
-import android.content.res.Resources;
 import android.provider.BaseColumns;
-
-import uk.ac.stir.cs.yh.rj.R;
 
 public final class ConversionDatabaseContract {
 
-    private ConversionDatabaseContract(){
+    private ConversionDatabaseContract() {
     }
 
     public static class Conversions implements BaseColumns {

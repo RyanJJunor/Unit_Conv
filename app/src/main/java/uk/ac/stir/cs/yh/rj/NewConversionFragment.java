@@ -13,10 +13,13 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.snackbar.Snackbar;
 
+import java.util.ArrayList;
+
+import uk.ac.stir.cs.yh.rj.db.ConversionDatabaseContract.Conversions;
 import uk.ac.stir.cs.yh.rj.db.ConversionDbMethods;
 
 
-public class NewConversionFragment extends Fragment {
+class NewConversionFragment extends Fragment {
 
 
     private ConversionDbMethods dbMethods;
@@ -24,7 +27,7 @@ public class NewConversionFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.getFragmentManager().beginTransaction().add(this, "new_conversion_fragment");
+        this.getFragmentManager().beginTransaction().add(this, getString(R.string.tag_new_conversion));
     }
 
     @Nullable
@@ -58,23 +61,43 @@ public class NewConversionFragment extends Fragment {
 
         buttonSelectNewConversion.setOnClickListener((v -> {
 
-            //todo don't allow unit1 and unit2 to have the same name
-
-            //todo check conversion name is not Time, Volume etc and limit the amount of new conversions
-            String name = editTextConversionName.getText().toString();
-            String unit1 = editTextNewUnit1.getText().toString();
-            String unit2 = editTextNewUnit2.getText().toString();
-            String unitRate = editTextNewRate.getText().toString();
+            String name = editTextConversionName.getText().toString().trim();
+            String unit1 = editTextNewUnit1.getText().toString().trim();
+            String unit2 = editTextNewUnit2.getText().toString().trim();
+            String unitRate = editTextNewRate.getText().toString().trim();
 
 
-            //todo make more robust and move to COnversionDbMethods
-            if (!unit1.equals("") || !unit2.equals("") || !unitRate.equals("")) {
+            if (validInput(name, unit1, unit2, unitRate)) {
+
+
+                String[] projection = {Conversions.COLUMN_NAME_CATEGORY};
+                ArrayList<String> names = dbMethods.selectStatement(true, projection, null, null);
+
+                projection[0] = "COUNT(" + Conversions.COLUMN_NAME_ADDED_CONVERSION_UNIQUE + ")";
+                String selection = Conversions.COLUMN_NAME_ADDED_CONVERSION_UNIQUE + " IS NOT NULL";
+                ArrayList<String> customConversions = dbMethods.selectStatement(true, projection, selection, null);
+
+                if (Integer.parseInt(customConversions.get(0)) == 5) {
+                    Snackbar.make(view, getString(R.string.limit_reached), 2000).show();
+                    return;
+                }
+
+                if (names.contains(name)) {
+                    Snackbar.make(view, getString(R.string.duplicate_conversion), 2000).show();
+                    return;
+                }
+
 
                 if (dbMethods.insertStatement(name, unit1, unit2, unitRate) != -1) {
-                    Snackbar.make(view, getString(R.string.snackConvAdded), 1000).show();
+                    Snackbar.make(view, getString(R.string.snackConvAdded), 2000).show();
+
+                    editTextConversionName.setText("");
+                    editTextNewUnit1.setText("");
+                    editTextNewUnit2.setText("");
+                    editTextNewRate.setText("");
 
                     SelectionFragment fragmentSelect = (SelectionFragment)
-                            getFragmentManager().findFragmentByTag("selection_fragment");
+                            getFragmentManager().findFragmentByTag(getString(R.string.tag_selection));
 
                     getFragmentManager().beginTransaction()
                             .detach(fragmentSelect)
@@ -82,21 +105,40 @@ public class NewConversionFragment extends Fragment {
                             .commit();
 
                     RemoveConversionFragment fragmentRemove = (RemoveConversionFragment)
-                            getFragmentManager().findFragmentByTag("remove_conversion_fragment");
+                            getFragmentManager().findFragmentByTag(getString(R.string.tag_remove));
 
                     getFragmentManager().beginTransaction()
                             .detach(fragmentRemove)
                             .attach(fragmentRemove)
                             .commit();
 
-                }
-                else {
-                    Snackbar.make(view, "Conversion not Added", 1000).show();
+                } else {
+                    Snackbar.make(view, getString(R.string.conversion_error), 2000).show();
                 }
 
+            } else {
+                Snackbar.make(view, getString(R.string.invalid_input), 2000).show();
             }
 
         }));
+    }
+
+    private boolean validInput(String name, String unit1, String unit2, String unitRate) {
+
+        boolean isValid = true;
+
+        if (name.equals("") || unit1.equals("") || unit2.equals("") || unitRate.equals(""))
+            isValid = false;
+
+        if (unit1.equals(unit2))
+            isValid = false;
+
+        if (name.matches(getString(R.string.regex)) || unit1.matches(getString(R.string.regex)) || unit2.matches(getString(R.string.regex)))
+            isValid = false;
+
+
+        return isValid;
+
     }
 
 

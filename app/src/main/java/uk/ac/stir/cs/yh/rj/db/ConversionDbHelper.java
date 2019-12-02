@@ -8,8 +8,8 @@ import uk.ac.stir.cs.yh.rj.db.ConversionDatabaseContract.Conversions;
 
 
 public class ConversionDbHelper extends SQLiteOpenHelper {
-    public static final int DATABASE_Version = 1;
-    public static final String DATABASE_NAME = "Conversions.db";
+    private static final int DATABASE_Version = 1;
+    private static final String DATABASE_NAME = "Conversions.db";
 
     private static final String SQL_CREATE_ENTRIES =
             "CREATE TABLE IF NOT EXISTS " + Conversions.TABLE_NAME + " (" +

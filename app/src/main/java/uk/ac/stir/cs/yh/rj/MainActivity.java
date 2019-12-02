@@ -1,19 +1,17 @@
 package uk.ac.stir.cs.yh.rj;
 
-import uk.ac.stir.cs.yh.rj.db.ConversionDbHelper;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.viewpager.widget.ViewPager;
-
 import android.content.pm.ActivityInfo;
-import android.content.res.Configuration;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.widget.Button;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.viewpager.widget.ViewPager;
+
 import com.google.android.material.tabs.TabLayout;
+
+import uk.ac.stir.cs.yh.rj.db.ConversionDbHelper;
 
 public class MainActivity extends AppCompatActivity {
 

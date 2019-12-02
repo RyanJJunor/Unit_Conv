@@ -13,6 +13,8 @@
         android:layout_height="50dp"
         android:ems="10"
         android:inputType="textPersonName"
+        android:maxLength="15"
+        android:maxLines="1"
         app:layout_constraintBottom_toTopOf="@+id/textViewNewUnitFrom"
         app:layout_constraintStart_toStartOf="@+id/textViewNewUnitFrom"
         app:layout_constraintTop_toBottomOf="@+id/textViewNewName" />
@@ -21,7 +23,7 @@
         android:id="@+id/textViewNewName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="1. Conversion Name:"
+        android:text="@string/add_name"
         app:layout_constraintBottom_toTopOf="@+id/editTextConversionName"
         app:layout_constraintStart_toStartOf="@+id/editTextConversionName"
         app:layout_constraintTop_toTopOf="parent" />
@@ -31,7 +33,9 @@
         android:layout_width="200dp"
         android:layout_height="50dp"
         android:ems="10"
-        android:inputType="textPersonName"
+        android:inputType="numberDecimal"
+        android:maxLength="15"
+        android:maxLines="1"
         app:layout_constraintBottom_toTopOf="@+id/buttonSelectNewConversion"
         app:layout_constraintStart_toStartOf="@+id/buttonSelectNewConversion"
         app:layout_constraintTop_toBottomOf="@+id/textViewNewUnitTo" />
@@ -40,7 +44,7 @@
         android:id="@+id/textViewNewConvUnit2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="3. Unit to Convert to:"
+        android:text="@string/add_unit_to"
         app:layout_constraintBottom_toTopOf="@+id/editTextNewUnitFrom"
         app:layout_constraintStart_toStartOf="@+id/editTextNewUnitFrom"
         app:layout_constraintTop_toBottomOf="@+id/editTextNewUnitTo" />
@@ -60,7 +64,7 @@
         android:id="@+id/textViewNewUnitFrom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="2. Unit to Convert From:"
+        android:text="@string/add_unit_from"
         app:layout_constraintBottom_toTopOf="@+id/editTextNewUnitTo"
         app:layout_constraintStart_toStartOf="@+id/editTextNewUnitTo"
         app:layout_constraintTop_toBottomOf="@+id/editTextConversionName" />
@@ -69,7 +73,7 @@
         android:id="@+id/textViewNewUnitTo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="4. Conversion Rate: (e.g. 0.001 or 60)"
+        android:text="@string/add_unit_rate"
         app:layout_constraintBottom_toTopOf="@+id/editTextNewRate"
         app:layout_constraintStart_toStartOf="@+id/editTextNewRate"
         app:layout_constraintTop_toBottomOf="@+id/editTextNewUnitFrom" />
@@ -80,6 +84,8 @@
         android:layout_height="50dp"
         android:ems="10"
         android:inputType="textPersonName"
+        android:maxLength="15"
+        android:maxLines="1"
         app:layout_constraintBottom_toTopOf="@+id/textViewNewConvUnit2"
         app:layout_constraintStart_toStartOf="@+id/textViewNewConvUnit2"
         app:layout_constraintTop_toBottomOf="@+id/textViewNewUnitFrom" />
@@ -90,6 +96,8 @@
         android:layout_height="50dp"
         android:ems="10"
         android:inputType="textPersonName"
+        android:maxLength="15"
+        android:maxLines="1"
         app:layout_constraintBottom_toTopOf="@+id/textViewNewUnitTo"
         app:layout_constraintStart_toStartOf="@+id/textViewNewUnitTo"
         app:layout_constraintTop_toBottomOf="@+id/textViewNewConvUnit2" />

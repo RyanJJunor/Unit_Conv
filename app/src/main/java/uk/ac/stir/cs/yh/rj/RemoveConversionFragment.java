@@ -1,6 +1,5 @@
 package uk.ac.stir.cs.yh.rj;
 
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,13 +16,12 @@ import androidx.fragment.app.Fragment;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import uk.ac.stir.cs.yh.rj.db.ConversionDatabaseContract.Conversions;
 import uk.ac.stir.cs.yh.rj.db.ConversionDbMethods;
 
 
-public class RemoveConversionFragment extends Fragment {
+class RemoveConversionFragment extends Fragment {
 
     private ConversionDbMethods dbMethods;
     private Spinner spinnerConversions;
@@ -32,7 +30,7 @@ public class RemoveConversionFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.getFragmentManager().beginTransaction().add(this, "remove_conversion_fragment");
+        this.getFragmentManager().beginTransaction().add(this, getString(R.string.tag_remove));
     }
 
     @Nullable
@@ -84,11 +82,11 @@ public class RemoveConversionFragment extends Fragment {
             if (dbMethods.deleteStatement(selection, selectionArgs) != 0) {
 
                 populateSpinner();
-                Snackbar.make(view, "Conversion Removed", 1000).show();
+                Snackbar.make(view, getString(R.string.conversion_removed), 2000).show();
 
 
                 SelectionFragment fragment = (SelectionFragment)
-                        getFragmentManager().findFragmentByTag("selection_fragment");
+                        getFragmentManager().findFragmentByTag(getString(R.string.tag_selection));
 
                 getFragmentManager().beginTransaction()
                         .detach(fragment)
@@ -104,18 +102,24 @@ public class RemoveConversionFragment extends Fragment {
 
 
     private void populateSpinner() {
-
+        ArrayAdapter<String> adapter;
+        ArrayList<String> conversions;
         String[] projection = {
                 Conversions.COLUMN_NAME_CATEGORY
         };
 
         String selection = Conversions.COLUMN_NAME_ADDED_CONVERSION_UNIQUE + " IS NOT NULL ";
 
+        conversions = dbMethods.selectStatement(true, projection, selection, null);
 
-        ArrayList<String> conversions = dbMethods.selectStatement(true, projection, selection, null);
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, conversions);
-
+        if (conversions.size() != 0) {
+            adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, conversions);
+            spinnerConversions.setEnabled(true);
+        } else {
+            conversions.add(getString(R.string.empty_conversions));
+            adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, conversions);
+            spinnerConversions.setEnabled(false);
+        }
         spinnerConversions.setAdapter(adapter);
 
 
