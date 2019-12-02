@@ -3,6 +3,7 @@ package uk.ac.stir.cs.yh.rj;
 import android.content.pm.ActivityInfo;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.view.HapticFeedbackConstants;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,6 +14,9 @@ import com.google.android.material.tabs.TabLayout;
 
 import uk.ac.stir.cs.yh.rj.db.ConversionDbHelper;
 
+/**
+ * The main activity which houses the fragments
+ */
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -25,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
 
         //Rotate button as the accelerometer on my phone does not work
         buttonRotate.setOnClickListener(v -> {
+
+            v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
 
             if (this.getRequestedOrientation() == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT || this.getRequestedOrientation() == ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
                 this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);

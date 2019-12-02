@@ -18,7 +18,10 @@ import java.util.ArrayList;
 import uk.ac.stir.cs.yh.rj.db.ConversionDatabaseContract.Conversions;
 import uk.ac.stir.cs.yh.rj.db.ConversionDbMethods;
 
-class NewConversionFragment extends Fragment {
+/**
+ * The fragment that handles adding new conversions
+ */
+public class NewConversionFragment extends Fragment {
 
     private ConversionDbMethods dbMethods;
     private final int NUMBER_OF_CONVERSIONS_ALLOWED = 5;
@@ -63,6 +66,7 @@ class NewConversionFragment extends Fragment {
             String unitRate = editTextNewRate.getText().toString().trim();
 
 
+            // Checks to see if the input is valid
             if (validInput(name, unit1, unit2, unitRate)) {
 
                 //Gets the names/categories of all conversions
@@ -87,6 +91,7 @@ class NewConversionFragment extends Fragment {
                 }
 
 
+                //If the statement is successful
                 if (dbMethods.insertStatement(name, unit1, unit2, unitRate) != -1) {
                     Snackbar.make(view, getString(R.string.snackConvAdded), 2000).show();
 

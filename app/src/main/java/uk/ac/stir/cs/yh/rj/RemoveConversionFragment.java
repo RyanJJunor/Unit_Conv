@@ -20,8 +20,10 @@ import java.util.ArrayList;
 import uk.ac.stir.cs.yh.rj.db.ConversionDatabaseContract.Conversions;
 import uk.ac.stir.cs.yh.rj.db.ConversionDbMethods;
 
-
-class RemoveConversionFragment extends Fragment {
+/**
+ * The fragment that handles removing conversions
+ */
+public class RemoveConversionFragment extends Fragment {
 
     private ConversionDbMethods dbMethods;
     private Spinner spinnerConversions;
@@ -105,7 +107,7 @@ class RemoveConversionFragment extends Fragment {
 
 
     /**
-     * Populates the spinenr with the custom conversions from the database
+     * Populates the spinner with the custom conversions from the database
      */
     private void populateSpinner() {
         ArrayAdapter<String> adapter;

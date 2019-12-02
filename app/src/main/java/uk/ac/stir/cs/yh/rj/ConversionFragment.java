@@ -18,11 +18,15 @@ import com.google.android.material.snackbar.Snackbar;
 
 import java.text.DecimalFormat;
 
-class ConversionFragment extends Fragment {
+/**
+ * Fragment that handles the conversions
+ */
+public class ConversionFragment extends Fragment {
 
     private SharedViewModel model;
 
     private double formula;
+    // to format the output for human consumption
     private DecimalFormat df = new DecimalFormat("###.#########");
     private Snackbar snack;
     private EditText editTextUnit1;

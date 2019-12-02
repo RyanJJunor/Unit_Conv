@@ -5,6 +5,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
+/**
+ * Class that handles the changing of fragments
+ */
 class ConversionPagerAdapter extends FragmentStatePagerAdapter {
 
     private final int numOfTabs;

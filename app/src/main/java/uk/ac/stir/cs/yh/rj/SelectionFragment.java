@@ -18,7 +18,11 @@ import java.util.ArrayList;
 import uk.ac.stir.cs.yh.rj.db.ConversionDatabaseContract.Conversions;
 import uk.ac.stir.cs.yh.rj.db.ConversionDbMethods;
 
-class SelectionFragment extends Fragment {
+
+/**
+ * The fragment that handles the selection of units to convert
+ */
+public class SelectionFragment extends Fragment {
     private SharedViewModel model;
     private ConversionDbMethods dbMethods;
     private int currentCategory;
@@ -33,6 +37,7 @@ class SelectionFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Assign a tag to the fragment so I can retrieve it
         this.getFragmentManager().beginTransaction().add(this, getString(R.string.tag_selection));
 
         dbMethods = new ConversionDbMethods(getContext());
@@ -48,7 +53,7 @@ class SelectionFragment extends Fragment {
         super.onPause();
     }
 
-    //TODO DO this for the other fragment
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -64,6 +69,8 @@ class SelectionFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
+                //This is true if the user tries to select the same unit in both spinners. If they do
+                // then the items in the spinners swap.
                 if (model.getUnit2Pos() == position) {
 
                     model.setUnit2Pos(model.getUnit1Pos());
@@ -87,6 +94,8 @@ class SelectionFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
+                //This is true if the user tries to select the same unit in both spinners. If they do
+                // then the items in the spinners swap.
                 if (model.getUnit1Pos() == position) {
 
                     model.setUnit1Pos(model.getUnit2Pos());
@@ -137,7 +146,10 @@ class SelectionFragment extends Fragment {
         super.onStart();
     }
 
-    //todo tidy up, fix context?
+    /**
+     * Populates the spinner with the categories in the database
+     * @param spinner the spinner that is to contain categories
+     */
     private void populateUnitTypeSpinner(Spinner spinner) {
 
         String[] projection = {
@@ -152,6 +164,13 @@ class SelectionFragment extends Fragment {
 
     }
 
+    /**
+     * Populates the unit spinners, and sets their selected units
+     * @param spinnerUnitType the spinner that contains the conversion categories
+     * @param position the position of the category spinner's selected item
+     * @param spinnerUnit1 the spinner for the unit to convert from
+     * @param spinnerUnit2 the spinenr for the unit to convert to
+     */
     private void populateUnitSpinner(Spinner spinnerUnitType, int position, Spinner spinnerUnit1, Spinner spinnerUnit2) {
 
 
@@ -180,6 +199,7 @@ class SelectionFragment extends Fragment {
             model.setUnit1Pos(0);
             model.setUnit2Pos(1);
         } else {
+            // set the selected units to the positions stored in the sharedviewmodel
             spinnerUnit1.setSelection(model.getUnit1Pos());
             spinnerUnit2.setSelection(model.getUnit2Pos());
         }
@@ -187,22 +207,38 @@ class SelectionFragment extends Fragment {
 
     }
 
+    /**
+     * Sets the unit that is currently selected in the sharedviewmodel
+     * @param unit1 the spinner that is for the unit to convert from
+     * @param pos the current position of the selected item in the spinner unit1
+     */
     private void setUnit1(Spinner unit1, int pos) {
-        model.loadUnit1(unit1.getAdapter().getItem(pos).toString());
-        //Ensures setFormula isn't called unless both units are ready to be used
+        model.setUnit1(unit1.getAdapter().getItem(pos).toString());
+        //Ensures setFormula isn't called unless both units are ready to be used (neither is null,
+        // the two units are from the same category and they aren't the same unit)
         if (model.getUnit1().getValue() != null && model.getUnit2().getValue() != null && unit1Cat == unit2Cat && model.getUnit1Pos() != model.getUnit2Pos()) {
             setFormula();
         }
     }
 
+    /**
+     * Sets the unit that is currently selected in the sharedviewmodel
+     * @param unit2 the spinner that is for the unit to convert from
+     * @param pos the current position of the selected item in the spinner unit2
+     */
     private void setUnit2(Spinner unit2, int pos) {
-        model.loadUnit2(unit2.getAdapter().getItem(pos).toString());
-        //Ensures setFormula isn't called unless both units are ready to be used
+        model.setUnit2(unit2.getAdapter().getItem(pos).toString());
+        //Ensures setFormula isn't called unless both units are ready to be used (neither is null,
+        // the two units are from the same category and they aren't the same unit)
         if (model.getUnit2().getValue() != null && model.getUnit1().getValue() != null && unit1Cat == unit2Cat && model.getUnit1Pos() != model.getUnit2Pos()) {
             setFormula();
         }
     }
 
+
+    /**
+     * Sets the formula currently required in the sharedviewmodel
+     */
     private void setFormula() {
 
         String[] projection = {
@@ -220,7 +256,7 @@ class SelectionFragment extends Fragment {
 
         ArrayList<String> formula = dbMethods.selectStatement(true, projection, selection, selectionArgs);
 
-        model.loadFormula(Double.parseDouble(formula.get(0)));
+        model.setFormula(Double.parseDouble(formula.get(0)));
 
 
     }
