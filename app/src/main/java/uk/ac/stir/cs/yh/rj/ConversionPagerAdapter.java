@@ -9,11 +9,10 @@ class ConversionPagerAdapter extends FragmentStatePagerAdapter {
 
     private final int numOfTabs;
 
-    public ConversionPagerAdapter(@NonNull FragmentManager fm, int behavior) {
+    ConversionPagerAdapter(@NonNull FragmentManager fm, int behavior) {
         super(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         this.numOfTabs = behavior;
     }
-
 
     @Override
     public Fragment getItem(int position) {

@@ -22,10 +22,7 @@ class ConversionFragment extends Fragment {
 
     private SharedViewModel model;
 
-    //todo change name
-
     private double formula;
-
     private DecimalFormat df = new DecimalFormat("###.#########");
     private Snackbar snack;
     private EditText editTextUnit1;
@@ -34,6 +31,8 @@ class ConversionFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Assign a tag to the fragment so I can retrieve it
         this.getFragmentManager().beginTransaction().add(this, getString(R.string.tag_conversion));
 
     }
@@ -52,7 +51,7 @@ class ConversionFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onStart();
 
-
+        //listens for changes to the unit to convert from
         model = new ViewModelProvider(this.getActivity(), new ViewModelProvider.NewInstanceFactory()).get(SharedViewModel.class);
         model.getUnit1().observe(this, unit1 -> {
 
@@ -61,11 +60,13 @@ class ConversionFragment extends Fragment {
 
         });
 
+        //listens for changes to the unit to convert to
         model.getUnit2().observe(this, unit2 -> {
             TextView textUnit2 = view.findViewById(R.id.textViewUnitToConvertTo);
             textUnit2.setText(unit2);
         });
 
+        //listens for changes to the conversion rate
         model.getFormula().observe(this, formula -> {
             this.formula = formula;
             convert(true);
@@ -74,11 +75,11 @@ class ConversionFragment extends Fragment {
         editTextUnit1 = view.findViewById(R.id.editTextUnit1);
         editTextUnit2 = view.findViewById(R.id.editTextUnit2);
 
-        //todo use resource
         snack = Snackbar.make(view, getString(R.string.snackCharLimit), 2000);
 
+        // Each button appends a character(Except the del and clear button) to the input field,
+        // performs haptic feedback and recalculates the output
 
-        //todo fix appending?
         Button buttonNo0 = view.findViewById(R.id.buttonNo0);
         buttonNo0.setOnClickListener((View v) -> {
             editTextUnit1.append("0");
@@ -175,8 +176,13 @@ class ConversionFragment extends Fragment {
 
     }
 
+    /**
+     * Does the conversion and populates the output editText with the result
+     * @param gettingFormula this is used to stop the snackbar from showing up when the input is not being changed
+     */
     private void convert(boolean gettingFormula) {
 
+        //todo is this needed if the edittext only allows 10 charasters
         if (editTextUnit1.length() == 10 && !gettingFormula && !snack.isShown()) {
             snack.show();
         }

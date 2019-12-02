@@ -15,9 +15,6 @@ import uk.ac.stir.cs.yh.rj.db.ConversionDbHelper;
 
 public class MainActivity extends AppCompatActivity {
 
-    ConversionDbHelper dbHelper;
-    SQLiteDatabase db;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,6 +22,8 @@ public class MainActivity extends AppCompatActivity {
 
         Button buttonRotate = findViewById(R.id.buttonRotate);
 
+
+        //Rotate button as the accelerometer on my phone does not work
         buttonRotate.setOnClickListener(v -> {
 
             if (this.getRequestedOrientation() == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT || this.getRequestedOrientation() == ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
@@ -41,6 +40,9 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         final ViewPager viewPager = findViewById(R.id.pagerAdapterConvert);
+
+        // This lets all of the fragments be stored in memory to save them from constantly restarting
+        // it is 3 as I have four fragments and as one is always on screen, only 3 will be offscreen at one time
         viewPager.setOffscreenPageLimit(3);
 
 
@@ -53,7 +55,6 @@ public class MainActivity extends AppCompatActivity {
             public void
             onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
-
 
             }
 
@@ -68,33 +69,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //Checks to ensure the right layout is being used
-        /*if (findViewById(R.id.pagerAdapterConvert) != null) {
-
-
-            // If being restored from a previous state do nothing
-            // TODO CHECK THIS
-            if (savedInstanceState != null) {
-                return;
-            }
-
-            dbHelper = new ConversionDbHelper(this);
-            db = dbHelper.getWritableDatabase();
-
-            // Creating a new fragment
-            SelectionFragment selectionFragment = new SelectionFragment();
-
-            // In case this activity was started with special instructions from an
-            // Intent, pass the Intent's extras to the fragment as arguments
-            selectionFragment.setArguments(getIntent().getExtras());
-
-            // Add the fragment to the fragment frame in the main_activity layout
-            getSupportFragmentManager().beginTransaction().add(R.id.pagerAdapterConvert, selectionFragment).commit();
-        }
-        //TODO Handle this
-        else {
-
-        }*/
 
     }
 

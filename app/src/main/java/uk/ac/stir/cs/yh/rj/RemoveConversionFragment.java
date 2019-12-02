@@ -30,6 +30,7 @@ class RemoveConversionFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Assign a tag to the fragment so I can retrieve it
         this.getFragmentManager().beginTransaction().add(this, getString(R.string.tag_remove));
     }
 
@@ -70,6 +71,7 @@ class RemoveConversionFragment extends Fragment {
             }
         });
 
+        //removes the conversion selected
         buttonRemove.setOnClickListener(v -> {
 
 
@@ -85,6 +87,7 @@ class RemoveConversionFragment extends Fragment {
                 Snackbar.make(view, getString(R.string.conversion_removed), 2000).show();
 
 
+                //gets the fragment by its tag and refreshes it to repopulate based on the updated database
                 SelectionFragment fragment = (SelectionFragment)
                         getFragmentManager().findFragmentByTag(getString(R.string.tag_selection));
 
@@ -101,6 +104,9 @@ class RemoveConversionFragment extends Fragment {
     }
 
 
+    /**
+     * Populates the spinenr with the custom conversions from the database
+     */
     private void populateSpinner() {
         ArrayAdapter<String> adapter;
         ArrayList<String> conversions;
@@ -112,18 +118,16 @@ class RemoveConversionFragment extends Fragment {
 
         conversions = dbMethods.selectStatement(true, projection, selection, null);
 
+        //If a conversion exists
         if (conversions.size() != 0) {
             adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, conversions);
             spinnerConversions.setEnabled(true);
         } else {
+            // No custom conversions
             conversions.add(getString(R.string.empty_conversions));
             adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, conversions);
             spinnerConversions.setEnabled(false);
         }
         spinnerConversions.setAdapter(adapter);
-
-
     }
-
-
 }

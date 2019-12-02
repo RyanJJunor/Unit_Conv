@@ -6,7 +6,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import uk.ac.stir.cs.yh.rj.db.ConversionDatabaseContract.Conversions;
 
-
+/**
+ * Contains the statements to create and populate the table
+ */
 public class ConversionDbHelper extends SQLiteOpenHelper {
     private static final int DATABASE_Version = 1;
     private static final String DATABASE_NAME = "Conversions.db";
@@ -20,6 +22,8 @@ public class ConversionDbHelper extends SQLiteOpenHelper {
                     Conversions.COLUMN_NAME_CATEGORY + " TEXT," +
                     Conversions.COLUMN_NAME_ADDED_CONVERSION_UNIQUE + " TEXT UNIQUE)";
 
+
+    // Grouped and formatted this way to allow easy input of new rows
     private static final String GRAM_TO_KILOGRAM = "('Gram', 'Kilogram', '0.001', 'Mass')";
     private static final String GRAM_TO_POUND = "('Gram', 'Pound', '0.00220462', 'Mass')";
     private static final String GRAM_TO_STONE = "('Gram', 'Stone', '0.000157473', 'Mass')";
@@ -144,10 +148,8 @@ public class ConversionDbHelper extends SQLiteOpenHelper {
                     DAY_TO_MINUTE + "," +
                     DAY_TO_HOUR;
 
-    private static final String SQL_DELETE_ENTRIES =
-            "DROP TABLE IF EXISTS " + Conversions.TABLE_NAME;
 
-    public ConversionDbHelper(Context context) {
+    ConversionDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_Version);
     }
 
@@ -163,7 +165,6 @@ public class ConversionDbHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
     }
-
 
 }
 
