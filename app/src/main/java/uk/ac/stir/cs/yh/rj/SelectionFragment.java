@@ -137,9 +137,8 @@ public class SelectionFragment extends Fragment {
 
         populateUnitTypeSpinner(spinnerUnitType);
 
-
     }
-    
+
     /**
      * Populates the spinner with the categories in the database
      *
