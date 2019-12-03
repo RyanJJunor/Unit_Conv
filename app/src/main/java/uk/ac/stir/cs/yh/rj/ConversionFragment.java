@@ -23,8 +23,6 @@ import java.text.DecimalFormat;
  */
 public class ConversionFragment extends Fragment {
 
-    private SharedViewModel model;
-
     private double formula;
     // to format the output for human consumption
     private DecimalFormat df = new DecimalFormat("###.#########");
@@ -61,7 +59,7 @@ public class ConversionFragment extends Fragment {
 
 
         //listens for changes to the unit to convert from
-        model = new ViewModelProvider(this.getActivity(), new ViewModelProvider.NewInstanceFactory()).get(SharedViewModel.class);
+        SharedViewModel model = new ViewModelProvider(this.getActivity(), new ViewModelProvider.NewInstanceFactory()).get(SharedViewModel.class);
         model.getUnit1().observe(this, unit1 -> {
 
             TextView textUnit1 = view.findViewById(R.id.textViewUnitToConvertFrom);
