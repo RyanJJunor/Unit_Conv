@@ -28,7 +28,7 @@ public class ConversionFragment extends Fragment {
     private double formula;
     // to format the output for human consumption
     private DecimalFormat df = new DecimalFormat("###.#########");
-    private Snackbar snack;
+    private Snackbar snackCharLimit;
     private EditText editTextUnit1;
     private EditText editTextUnit2;
 
@@ -55,6 +55,11 @@ public class ConversionFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onStart();
 
+        //If more snackbars were added this would allow easy altering of time shown
+        int LENGTH_OF_SNACK = 2000;
+        snackCharLimit = Snackbar.make(view, getString(R.string.snackCharLimit), LENGTH_OF_SNACK);
+
+
         //listens for changes to the unit to convert from
         model = new ViewModelProvider(this.getActivity(), new ViewModelProvider.NewInstanceFactory()).get(SharedViewModel.class);
         model.getUnit1().observe(this, unit1 -> {
@@ -78,8 +83,6 @@ public class ConversionFragment extends Fragment {
 
         editTextUnit1 = view.findViewById(R.id.editTextUnit1);
         editTextUnit2 = view.findViewById(R.id.editTextUnit2);
-
-        snack = Snackbar.make(view, getString(R.string.snackCharLimit), 2000);
 
         // Each button appends a character(Except the del and clear button) to the input field,
         // performs haptic feedback and recalculates the output
@@ -187,8 +190,8 @@ public class ConversionFragment extends Fragment {
     private void convert(boolean gettingFormula) {
 
         //todo is this needed if the edittext only allows 10 charasters
-        if (editTextUnit1.length() == 10 && !gettingFormula && !snack.isShown()) {
-            snack.show();
+        if (editTextUnit1.length() == 10 && !gettingFormula && !snackCharLimit.isShown()) {
+            snackCharLimit.show();
         }
 
         if (editTextUnit1.length() != 0) {

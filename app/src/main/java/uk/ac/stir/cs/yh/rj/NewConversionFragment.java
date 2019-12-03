@@ -1,6 +1,7 @@
 package uk.ac.stir.cs.yh.rj;
 
 import android.os.Bundle;
+import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,11 @@ public class NewConversionFragment extends Fragment {
 
     private ConversionDbMethods dbMethods;
     private final int NUMBER_OF_CONVERSIONS_ALLOWED = 5;
+    private Snackbar snackLimit;
+    private Snackbar snackDuplicate;
+    private Snackbar snackSuccess;
+    private Snackbar snackError;
+    private Snackbar snackInvalid;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -52,6 +58,14 @@ public class NewConversionFragment extends Fragment {
 
         dbMethods = new ConversionDbMethods(getContext());
 
+        //Allows easy alteration
+        int LENGTH_OF_SNACK = 2000;
+        snackLimit = Snackbar.make(view, getString(R.string.limit_reached), LENGTH_OF_SNACK);
+        snackDuplicate = Snackbar.make(view, getString(R.string.duplicate_conversion), LENGTH_OF_SNACK);
+        snackSuccess = Snackbar.make(view, getString(R.string.snackConvAdded), LENGTH_OF_SNACK);
+        snackError = Snackbar.make(view, getString(R.string.conversion_error), LENGTH_OF_SNACK);
+        snackInvalid = Snackbar.make(view, getString(R.string.invalid_input), LENGTH_OF_SNACK);
+
         EditText editTextConversionName = view.findViewById(R.id.editTextConversionName);
         EditText editTextNewUnit1 = view.findViewById(R.id.editTextNewUnitFrom);
         EditText editTextNewUnit2 = view.findViewById(R.id.editTextNewUnitTo);
@@ -59,6 +73,8 @@ public class NewConversionFragment extends Fragment {
 
         Button buttonSelectNewConversion = view.findViewById(R.id.buttonSelectNewConversion);
         buttonSelectNewConversion.setOnClickListener((v -> {
+
+            view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
 
             String name = editTextConversionName.getText().toString().trim();
             String unit1 = editTextNewUnit1.getText().toString().trim();
@@ -81,19 +97,22 @@ public class NewConversionFragment extends Fragment {
                 // Only allow the user to add 5 conversions as it seems like a reasonable amount and
                 // by using a constant it would be very easy to change if needed
                 if (Integer.parseInt(customConversions.get(0)) == NUMBER_OF_CONVERSIONS_ALLOWED) {
-                    Snackbar.make(view, getString(R.string.limit_reached), 2000).show();
+                    if (!snackLimit.isShown())
+                    snackLimit.show();
                     return;
                 }
 
                 if (names.contains(name)) {
-                    Snackbar.make(view, getString(R.string.duplicate_conversion), 2000).show();
+                    if (!snackDuplicate.isShown())
+                    snackDuplicate.show();
                     return;
                 }
 
 
                 //If the statement is successful
                 if (dbMethods.insertStatement(name, unit1, unit2, unitRate) != -1) {
-                    Snackbar.make(view, getString(R.string.snackConvAdded), 2000).show();
+                    if (!snackSuccess.isShown())
+                    snackSuccess.show();
 
                     //clears the input fields
                     editTextConversionName.setText("");
@@ -120,11 +139,13 @@ public class NewConversionFragment extends Fragment {
                             .commit();
 
                 } else {
-                    Snackbar.make(view, getString(R.string.conversion_error), 2000).show();
+                    if (!snackError.isShown())
+                    snackError.show();
                 }
 
             } else {
-                Snackbar.make(view, getString(R.string.invalid_input), 2000).show();
+                if (!snackInvalid.isShown())
+                snackInvalid.show();
             }
 
         }));

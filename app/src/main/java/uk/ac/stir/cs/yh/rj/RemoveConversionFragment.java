@@ -1,6 +1,7 @@
 package uk.ac.stir.cs.yh.rj;
 
 import android.os.Bundle;
+import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +31,7 @@ public class RemoveConversionFragment extends Fragment {
     private Spinner spinnerConversions;
     private int spinnerPos;
     private SharedViewModel model;
+    private Snackbar snackRemoved;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -57,6 +59,9 @@ public class RemoveConversionFragment extends Fragment {
 
         model = new ViewModelProvider(this.getActivity(), new ViewModelProvider.NewInstanceFactory()).get(SharedViewModel.class);
 
+        int LENGTH_OF_SNACK = 2000;
+        snackRemoved = Snackbar.make(view, getString(R.string.conversion_removed), LENGTH_OF_SNACK);
+
         dbMethods = new ConversionDbMethods(getContext());
 
         spinnerConversions = view.findViewById(R.id.spinnerRemoveConv);
@@ -80,6 +85,7 @@ public class RemoveConversionFragment extends Fragment {
         //removes the conversion selected
         buttonRemove.setOnClickListener(v -> {
 
+            view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
 
             String selection = Conversions.COLUMN_NAME_CATEGORY + " = ? ";
 
@@ -96,7 +102,9 @@ public class RemoveConversionFragment extends Fragment {
                 model.setRowRemoved(true);
 
                 populateSpinner();
-                Snackbar.make(view, getString(R.string.conversion_removed), 2000).show();
+
+                if (!snackRemoved.isShown())
+                snackRemoved.show();
 
 
                 //gets the fragment by its tag and refreshes it to repopulate based on the updated database

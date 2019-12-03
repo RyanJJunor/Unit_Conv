@@ -260,12 +260,6 @@ public class SelectionFragment extends Fragment {
 
         };
 
-        System.out.println(selectionArgs[0]);
-        System.out.println(selectionArgs[1]);
-        System.out.println(unit1Cat);
-        System.out.println(unit2Cat);
-        System.out.println("test: " + model.getCategory());
-
         ArrayList<String> formula = dbMethods.selectStatement(true, projection, selection, selectionArgs);
 
         model.setFormula(Double.parseDouble(formula.get(0)));
